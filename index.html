@@ -155,6 +155,10 @@
 
     /* accessibility */
     button:focus, a:focus, input:focus, select:focus, textarea:focus{outline-offset:3px}
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
   </style>
   <!-- Custom cursor -->
   <style>
@@ -185,6 +189,14 @@
 </head>
 
 <body>
+  <!-- Mobile preloader -->
+  <div id="mobilePreloader" style="position:fixed;inset:0;z-index:9999;background:var(--bg-top);display:flex;align-items:center;justify-content:center;transition:opacity 0.4s ease">
+    <div style="text-align:center">
+      <div style="width:60px;height:60px;margin:0 auto 20px;border:4px solid rgba(47,158,68,0.2);border-top-color:var(--accent-green);border-radius:50%;animation:spin 1s linear infinite"></div>
+      <div style="color:var(--accent-green);font-weight:600">Loading AgriVentures...</div>
+    </div>
+  </div>
+
   <!-- MAIN NAV -->
   <nav aria-label="Main navigation">
     <div class="container nav-inner">
@@ -743,6 +755,42 @@
       });
     });
   })();
+
+  // Hide preloader after 1s or when page fully loads
+  document.addEventListener('DOMContentLoaded', () => {
+    const preloader = document.getElementById('mobilePreloader');
+    if (preloader) {
+      setTimeout(() => {
+        preloader.style.opacity = '0';
+        setTimeout(() => preloader.remove(), 400);
+      }, 1000);
+    }
+  });
+
+  // Preload forms immediately
+  const formUrls = [
+    'https://forms.google.com/startup-form',
+    APPS_SCRIPT_ENDPOINT
+  ];
+  
+  if ('connection' in navigator && navigator.connection.saveData) {
+    // Don't preload if data saver is enabled
+  } else {
+    formUrls.forEach(url => {
+      const link = document.createElement('link');
+      link.rel = 'preconnect';
+      link.href = url;
+      document.head.appendChild(link);
+      
+      if (!url.includes('google')) {
+        // Prefetch non-Google forms
+        const prefetch = document.createElement('link');
+        prefetch.rel = 'prefetch';
+        prefetch.href = url;
+        document.head.appendChild(prefetch);
+      }
+    });
+  }
   </script>
 </body>
 </html>
