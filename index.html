@@ -1,730 +1,970 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AgriVentures | Future of Agritech</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-            scroll-behavior: smooth;
-            cursor: none;
-        }
-        
-        .cursor {
-            width: 6px;
-            height: 6px;
-            background: rgba(255,255,255,0.8);
-            border-radius: 50%;
-            position: fixed;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease;
-        }
-        
-        .cursor-follower {
-            width: 16px;
-            height: 16px;
-            border: 1px solid rgba(255,255,255,0.4);
-            border-radius: 50%;
-            position: fixed;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 9998;
-            transition: all 0.1s ease-out;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>AgriVentures | Future of Agritech</title>
 
-        .cursor.active {
-            width: 8px;
-            height: 8px;
-        }
+  <!-- SEO / Social -->
+  <meta name="description" content="AgriVentures India — Product Hunt for Agritech: join founders, farmers, investors and corporates building the future of agriculture." />
+  <meta property="og:title" content="AgriVentures India — Future of Agritech" />
+  <meta property="og:description" content="Join India's fastest growing agritech community of innovators, farmers and investors." />
+  <meta property="og:image" content="/favicons/android-chrome-512x512.png" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@agriventures_In" />
 
-        .cursor-follower.active {
-            width: 24px;
-            height: 24px;
-        }
-        
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-        }
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicons/android-chrome-512x512.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
+  <link rel="shortcut icon" href="/favicons/favicon.ico" />
+  <link rel="manifest" href="/favicons/site.webmanifest" />
 
-        @media (max-width: 640px) {
-            .cursor, .cursor-follower {
-                display: none;
-            }
-            
-            body {
-                cursor: auto;
-            }
-            
-            .hero-bg {
-                background-position: 60% center;
-            }
-            
-            .feature-card {
-                padding: 1.5rem;
-            }
-        }
-        
-        .hover-3d {
-            transition: transform 0.5s, box-shadow 0.5s;
-        }
-        
-        .hover-3d:hover {
-            transform: translateY(-10px) perspective(1000px) rotateX(5deg) rotateY(5deg);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-        
-        .hero-bg {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
-            background-size: cover;
-            background-position: center;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-        
-        .animate-bounce-slow {
-            animation: bounce-slow 3s infinite;
-        }
-        
-        @keyframes bounce-slow {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-    </style>
+  <!-- Theme colors -->
+  <meta name="theme-color" content="#2F9E44" />
+  <meta name="msapplication-TileColor" content="#FF7F11" />
+
+  <!-- Performance: fonts preconnect + single family (Space Grotesk used as primary) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <!-- Tailwind - defer parsing to not block first paint -->
+  <script src="https://cdn.tailwindcss.com" defer></script>
+
+  <!-- Icon set (kept) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+
+  <!-- AOS CSS (animation library) -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+  <!-- Page styles: brand variables, glass, shadows, bento grid + accessibility -->
+  <style>
+    :root{
+      --agri-green:#2F9E44;
+      --saffron:#FF7F11;
+      --charcoal:#0F1724;
+      --bg-soft:#F5F7F9;
+      --glass-alpha: 0.06;
+      --glass-border: rgba(255,255,255,0.08);
+      --card-shadow: 0 18px 40px rgba(2,6,23,0.35);
+      --glass-radius: 14px;
+      --glass-blur: 10px;
+    }
+
+    /* Base */
+    html,body{height:100%}
+    body {
+      font-family: 'Space Grotesk', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      margin:0;
+      color: #111827;
+      background: linear-gradient(180deg,#071029 0%, #0b1120 60%);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      scroll-behavior:smooth;
+      /* keep native cursor for accessibility */
+      cursor: auto;
+    }
+
+    /* Container to hold Vanta / particle background with overlay */
+    #vanta-bg{
+      min-height:100vh;
+      position:relative;
+      isolation:isolate;
+      overflow:hidden;
+    }
+
+    /* Soft hero overlay for depth */
+    .hero-overlay {
+      position:absolute;
+      inset:0;
+      background: linear-gradient(180deg, rgba(2,6,23,0.55) 0%, rgba(10,10,20,0.45) 100%);
+      pointer-events:none;
+      z-index:1;
+    }
+
+    /* Glass card style used widely */
+    .glass-card {
+      background: rgba(255,255,255,var(--glass-alpha));
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      border-radius: var(--glass-radius);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--card-shadow);
+    }
+
+    /* Floating shallow panel */
+    .float-panel {
+      transform: translateZ(0);
+      transition: transform 0.28s cubic-bezier(.22,.9,.35,1), box-shadow 0.28s;
+    }
+    .float-panel:hover{ transform: translateY(-8px) scale(1.01); box-shadow: 0 26px 60px rgba(2,6,23,0.48) }
+
+    /* Bento grid for benefits: more staggered/modern layout */
+    .bento-grid{
+      display:grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-auto-rows: 1fr;
+      gap:1.25rem;
+    }
+    .bento-item{ background:white; border-radius:12px; padding:1.25rem; box-shadow: 0 10px 30px rgba(2,6,23,0.08); }
+    /* define layout positions (@mobile small screens will stack automatically with utility classes) */
+    .bento-item.large{ grid-column: span 2; grid-row: span 1; }
+    .bento-item.xlarge{ grid-column: span 3; grid-row: span 1; }
+
+    /* 3D icon styling (subtle extrude via gradients & transform) */
+    .icon-3d{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:56px;height:56px;border-radius:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(245,245,245,0.9));
+      box-shadow: 0 8px 20px rgba(2,6,23,0.12), 0 1px 0 rgba(255,255,255,0.5) inset;
+      transform: translateZ(0);
+    }
+    .icon-3d i{ color: var(--agri-green); font-size:1.25rem; transform: translateY(-1px); }
+
+    /* Hero typography override for contrast on dark bg */
+    .hero-title { color: #E6F8EE; font-weight:700; letter-spacing:-0.02em; }
+    .hero-sub { color: rgba(230,248,238,0.9) }
+
+    /* Custom cursors (non-blocking; hidden for reduced-motion or small screens) */
+    .cursor, .cursor-follower { position:fixed; pointer-events:none; z-index:9999; transition:transform .08s linear; }
+    .cursor{ width:6px;height:6px;border-radius:50%; background:rgba(255,255,255,0.9); transform:translate(-50%,-50%); }
+    .cursor-follower{ width:18px;height:18px;border-radius:50%; border:1px solid rgba(255,255,255,0.25); transform:translate(-50%,-50%); }
+
+    @media (max-width: 640px) {
+      /* hide cursor on mobile as before */
+      .cursor, .cursor-follower { display:none; }
+      body { cursor: auto; }
+      .bento-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .bento-item.large{ grid-column: span 2; }
+      .bento-item.xlarge{ grid-column: span 2; }
+    }
+
+    /* Respect user reduce-motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+      /* Remove interactive backgrounds */
+      #particles-js, #vanta-bg > canvas { display:none !important; }
+      .cursor, .cursor-follower { display:none !important; }
+    }
+
+    /* subtle finishing touches for footer and white panels */
+    .muted { color: rgba(255,255,255,0.82); }
+  </style>
 </head>
-<body class="bg-gradient-to-br from-gray-900 via-purple-900 to-gray-800 font-['Space_Grotesk'] text-white" id="vanta-bg">
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
-    <!-- Navigation -->
-    <nav class="backdrop-blur-lg bg-white/5 border-b border-white/10 sticky top-0 z-50 shadow-lg">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center">
-                <img src="logo.png" alt="AgriVentures Logo" class="w-10 h-10 mr-2">
-                <span class="text-green-600 font-bold text-xl">AgriVentures</span>
+
+<body id="vanta-bg" class="bg-black text-white">
+
+  <!-- Custom cursor elements (non-blocking; hidden on reduced-motion / small screens) -->
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor-follower" aria-hidden="true"></div>
+
+  <!-- Navigation -->
+  <nav class="backdrop-blur-lg bg-white/5 border-b border-white/8 sticky top-0 z-50 shadow-lg" role="navigation" aria-label="Main navigation">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center">
+        <!-- Keep your logo path; change if needed. Lazy loading not applied to inline small logo-->
+        <img src="logo.png" alt="AgriVentures Logo" class="w-10 h-10 mr-2 rounded" />
+        <span class="text-green-400 font-bold text-xl">AgriVentures</span>
+      </div>
+
+      <div class="hidden md:flex space-x-8">
+        <a href="#about" class="text-gray-200 hover:text-green-300 transition">About</a>
+        <a href="#benefits" class="text-gray-200 hover:text-green-300 transition">Benefits</a>
+        <a href="#team" class="text-gray-200 hover:text-green-300 transition">Team</a>
+        <a href="#community" class="text-gray-200 hover:text-green-300 transition">Community</a>
+        <a href="#contact" class="text-gray-200 hover:text-green-300 transition">Contact</a>
+      </div>
+
+      <a href="#startup-form" class="hidden md:block bg-gradient-to-br from-[var(--agri-green)] to-[color-mix(in srgb, var(--agri-green) 70%, #1f6b2f 30%)] text-white px-4 py-2 rounded-md font-medium transition">
+        Submit Your Startup
+      </a>
+
+      <button id="mobile-menu-button" class="md:hidden text-gray-200" aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle menu">
+        <i class="fas fa-bars text-xl"></i>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white/5 border-t backdrop-blur-md" aria-hidden="true">
+      <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+        <a href="#about" class="text-gray-200 hover:text-green-300 py-2 transition">About</a>
+        <a href="#benefits" class="text-gray-200 hover:text-green-300 py-2 transition">Benefits</a>
+        <a href="#team" class="text-gray-200 hover:text-green-300 py-2 transition">Team</a>
+        <a href="#community" class="text-gray-200 hover:text-green-300 py-2 transition">Community</a>
+        <a href="#contact" class="text-gray-200 hover:text-green-300 py-2 transition">Contact</a>
+        <a href="#startup-form" class="bg-gradient-to-br from-[var(--agri-green)] to-[var(--saffron)] text-white px-4 py-2 rounded-md text-center transition">
+          Submit Your Startup
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden py-20 md:py-32 lg:py-48">
+    <!-- Vanta/Three canvas or fallback particle canvas will be injected here conditionally by JS -->
+    <div id="vanta-canvas" class="absolute inset-0 z-0" aria-hidden="true"></div>
+
+    <!-- soft hero overlay to ensure text legibility -->
+    <div class="hero-overlay"></div>
+
+    <!-- subtle particle layer (will be hidden on reduced-motion/mobile by JS) -->
+    <div id="particles-js" class="absolute inset-0 opacity-30 z-10" aria-hidden="true"></div>
+
+    <div class="relative z-20 container mx-auto px-4">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1 class="hero-title text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 sm:mb-6">Connecting India's Agritech Ecosystem</h1>
+        <p class="hero-sub text-lg sm:text-xl md:text-2xl mb-6 sm:mb-8">Join India's fastest growing community of agritech innovators, farmers, investors and corporates. Be part of the revolution transforming agriculture with technology.</p>
+
+        <div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row justify-center sm:gap-4">
+          <a href="#community-form" class="bg-gradient-to-br from-[var(--agri-green)] to-[var(--saffron)] text-white px-8 py-3 rounded-md font-medium text-lg transition hover:scale-[1.01] animate-bounce-slow">
+            Join Our Community
+          </a>
+          <a href="#startup-form" class="bg-white hover:bg-gray-100 text-[var(--agri-green)] px-8 py-3 rounded-md font-medium text-lg transition">
+            Submit Your Startup
+          </a>
+        </div>
+
+        <div class="mt-10 flex justify-center">
+          <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-sm rounded-full p-3 inline-flex items-center glass-card">
+            <div class="flex -space-x-2">
+              <img class="w-10 h-10 rounded-full border-2 border-white" loading="lazy" src="https://randomuser.me/api/portraits/women/12.jpg" alt="Member avatar">
+              <img class="w-10 h-10 rounded-full border-2 border-white" loading="lazy" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Member avatar">
+              <img class="w-10 h-10 rounded-full border-2 border-white" loading="lazy" src="https://randomuser.me/api/portraits/women/45.jpg" alt="Member avatar">
             </div>
-            
-            <div class="hidden md:flex space-x-8">
-                <a href="#about" class="text-gray-700 hover:text-green-600 transition">About</a>
-                <a href="#benefits" class="text-gray-700 hover:text-green-600 transition">Benefits</a>
-                <a href="#team" class="text-gray-700 hover:text-green-600 transition">Team</a>
-                <a href="#community" class="text-gray-700 hover:text-green-600 transition">Community</a>
-                <a href="#contact" class="text-gray-700 hover:text-green-600 transition">Contact</a>
+            <span class="ml-3 text-sm">Join 1,200+ members</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section (kept but styled with shallow depth) -->
+  <section class="py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+        <div class="bg-white p-6 rounded-xl shadow-sm">
+          <div class="text-[var(--agri-green)] text-3xl font-bold mb-2">6,000+</div>
+          <div class="text-gray-700">Agritech Startups</div>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm">
+          <div class="text-[var(--agri-green)] text-3xl font-bold mb-2">$3.4B</div>
+          <div class="text-gray-700">Funding in 2023</div>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm">
+          <div class="text-[var(--agri-green)] text-3xl font-bold mb-2">120M+</div>
+          <div class="text-gray-700">Farmers Impacted</div>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm">
+          <div class="text-[var(--agri-green)] text-3xl font-bold mb-2">1,200+</div>
+          <div class="text-gray-700">Community Members</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-16 md:py-24 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col lg:flex-row items-center">
+        <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-10 order-2 lg:order-1">
+          <h2 class="text-3xl font-bold text-gray-800 mb-6">About AgriVentures India</h2>
+          <p class="text-gray-600 mb-6">AgriVentures India is the first dedicated platform connecting all stakeholders in India's booming agritech ecosystem. We're building the "Product Hunt for Agritech" - a community-driven platform to discover, support and grow innovative agricultural technology solutions.</p>
+          <p class="text-gray-600 mb-6">With over 6,000 active agritech startups in India and growing investor interest, there's never been a better time to bring together founders, farmers, investors and corporates to collaborate and accelerate innovation in this critical sector.</p>
+
+          <div class="bg-green-50 border-l-4 border-[var(--agri-green)] p-4">
+            <p class="text-gray-700 italic">"India's agritech sector is projected to reach $24 billion by 2025. AgriVentures is creating the platform to connect and grow this ecosystem."</p>
+          </div>
+        </div>
+        <div class="md:w-1/2">
+          <img src="shirt.png" loading="lazy" alt="Farmers using technology" class="rounded-lg shadow-lg w-full">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section (converted to modern bento grid) -->
+  <section id="benefits" class="py-16 md:py-24 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">Why Join AgriVentures?</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">Discover the benefits of being part of India's premier agritech community</p>
+      </div>
+
+      <div class="bento-grid">
+        <div class="bento-item large float-panel glass-card hover-3d">
+          <div class="flex items-start gap-4">
+            <div class="icon-3d"><i class="fas fa-network-wired"></i></div>
+            <div>
+              <h3 class="font-semibold text-lg">Networking</h3>
+              <p class="text-sm text-gray-600">Connect with agritech founders, investors, farmers and industry leaders through our exclusive events and online platform.</p>
             </div>
-            
-            <a href="#startup-form" class="hidden md:block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md font-medium transition">
-                Submit Your Startup
-            </a>
-            
-            <button id="mobile-menu-button" class="md:hidden text-gray-700">
-                <i class="fas fa-bars text-xl"></i>
+          </div>
+        </div>
+
+        <div class="bento-item float-panel">
+          <div class="flex items-start gap-4">
+            <div class="icon-3d"><i class="fas fa-bullhorn"></i></div>
+            <div>
+              <h3 class="font-semibold text-lg">Startup Visibility</h3>
+              <p class="text-sm text-gray-600">Showcase your agritech startup to potential customers, partners and investors through our featured listings.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bento-item large float-panel">
+          <div class="flex items-start gap-4">
+            <div class="icon-3d"><i class="fas fa-chart-line"></i></div>
+            <div>
+              <h3 class="font-semibold text-lg">Market Insights</h3>
+              <p class="text-sm text-gray-600">Get access to exclusive reports, trends and data about India's rapidly evolving agritech landscape.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bento-item float-panel">
+          <div class="flex items-start gap-4">
+            <div class="icon-3d"><i class="fas fa-handshake"></i></div>
+            <div>
+              <h3 class="font-semibold text-lg">Partnerships</h3>
+              <p class="text-sm text-gray-600">Discover collaboration opportunities with corporates, research institutions and government initiatives.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bento-item float-panel">
+          <div class="flex items-start gap-4">
+            <div class="icon-3d"><i class="fas fa-graduation-cap"></i></div>
+            <div>
+              <h3 class="font-semibold text-lg">Learning Resources</h3>
+              <p class="text-sm text-gray-600">Access webinars, workshops and guides on everything from farm tech to fundraising in agritech.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bento-item xlarge float-panel">
+          <div class="flex items-start gap-4">
+            <div class="icon-3d"><i class="fas fa-trophy"></i></div>
+            <div>
+              <h3 class="font-semibold text-lg">Recognition</h3>
+              <p class="text-sm text-gray-600">Get featured in our "Agritech Startup of the Week" and annual awards recognizing innovation in the sector.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section (kept same structure, added lazy loading and consistent styling) -->
+  <section id="team" class="py-16 md:py-24 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">Meet Our Team</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">Passionate leaders driving India's agritech revolution</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div class="bg-gray-50 p-6 rounded-lg text-center">
+          <img src="prajwal.png" loading="lazy" alt="Prajwal Bedavatti" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-green-100">
+          <h3 class="text-xl font-semibold mb-1">Prajwal Bedavatti</h3>
+          <p class="text-[var(--agri-green)] mb-3">Founder & CEO</p>
+          <p class="text-gray-600">Former agri-tech entrepreneur with 5+ years experience building solutions for smallholder farmers.</p>
+          <div class="flex justify-center space-x-3 mt-4">
+            <a href="https://www.linkedin.com/in/prajwalworld/" rel="noopener noreferrer" target="_blank" class="text-gray-500 hover:text-green-600"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="text-gray-500 hover:text-green-600"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+
+        <!-- Remaining team cards unchanged except lazy loading -->
+        <div class="bg-gray-50 p-6 rounded-lg text-center">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" loading="lazy" alt="Team member" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-green-100">
+          <h3 class="text-xl font-semibold mb-1">To be hired</h3>
+          <p class="text-[var(--agri-green)] mb-3">Co-Founder & CTO</p>
+          <p class="text-gray-600">Introduction.</p>
+          <div class="flex justify-center space-x-3 mt-4">
+            <a href="#" class="text-gray-500 hover:text-green-600"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="text-gray-500 hover:text-green-600"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+
+        <div class="bg-gray-50 p-6 rounded-lg text-center">
+          <img src="https://randomuser.me/api/portraits/men/65.jpg" loading="lazy" alt="Team member" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-green-100">
+          <h3 class="text-xl font-semibold mb-1">To be hired</h3>
+          <p class="text-[var(--agri-green)] mb-3">Head of Community</p>
+          <p class="text-gray-600">Introduction.</p>
+          <div class="flex justify-center space-x-3 mt-4">
+            <a href="#" class="text-gray-500 hover:text-green-600"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="text-gray-500 hover:text-green-600"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Community, Startup, Partners, Contact, Footer sections: preserved content. Only added lazy-loading & small fixes (rel on _blank). -->
+
+  <section id="community" class="py-16 md:py-24 bg-[var(--agri-green)] text-white">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col lg:flex-row items-center">
+        <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-10">
+          <h2 class="text-3xl font-bold mb-6">Join Our Growing Community</h2>
+          <p class="mb-6 opacity-90">Be part of India's most vibrant agritech network. Get access to exclusive content, networking opportunities, and early invites to our platform launch.</p>
+
+          <form id="community-form" class="space-y-4" aria-label="Join community form">
+            <input type="text" name="_gotcha" id="_gotcha" style="display:none" autocomplete="off" aria-hidden="true" tabindex="-1">
+
+            <div>
+              <label for="name" class="block mb-1">Name</label>
+              <input type="text" id="name" name="name" class="w-full px-4 py-2 rounded-md bg-green-700 bg-opacity-30 border border-green-500 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent placeholder-green-200" placeholder="Your name" required>
+            </div>
+            <div>
+              <label for="email" class="block mb-1">Email</label>
+              <input type="email" id="email" name="email" class="w-full px-4 py-2 rounded-md bg-green-700 bg-opacity-30 border border-green-500 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent placeholder-green-200" placeholder="Your email address" required>
+            </div>
+            <div>
+              <label for="role" class="block mb-1">I'm a</label>
+              <select id="role" name="role" class="w-full px-4 py-2 rounded-md bg-green-700 bg-opacity-30 border border-green-500 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent text-white" required>
+                <option value="" disabled selected>Select your role</option>
+                <option value="founder">Agritech Founder</option>
+                <option value="farmer">Farmer/Farmer Group</option>
+                <option value="investor">Investor</option>
+                <option value="corporate">Corporate</option>
+                <option value="researcher">Researcher</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <button type="submit" class="w-full bg-white text-[var(--agri-green)] hover:bg-gray-100 px-6 py-3 rounded-md font-medium transition">Join Now</button>
+            <p class="text-sm opacity-70">We respect your privacy. No spam, ever.</p>
+            <div id="community-feedback" role="status" aria-live="polite" class="text-sm mt-2"></div>
+          </form>
+        </div>
+
+        <div class="md:w-1/2">
+          <div class="bg-white bg-opacity-10 p-8 rounded-lg backdrop-filter backdrop-blur-sm">
+            <h3 class="text-xl font-semibold mb-4">What members say</h3>
+
+            <div class="space-y-6">
+              <div class="flex items-start">
+                <img src="mallikarjun.png" loading="lazy" alt="Mallikarjun Chougala" class="w-12 h-12 rounded-full mr-4 object-cover">
+                <div>
+                  <p class="font-medium">Mallikarjun Chougala</p>
+                  <p class="text-sm opacity-80 mb-2">Founder, En-Cure Farms</p>
+                  <p class="italic">"Through AgriVentures, we connected with three investors who were perfect fits for our Series A. The quality of connections here is unmatched."</p>
+                </div>
+              </div>
+
+              <div class="flex items-start">
+                <img src="Dr. Prabhu. C. Ganiger" loading="lazy" alt="Dr Prabhu" class="w-12 h-12 rounded-full mr-4 object-cover">
+                <div>
+                  <p class="font-medium">Prabhu</p>
+                  <p class="text-sm opacity-80 mb-2">Founder & CEO, Diptera Hub</p>
+                  <p class="italic">"As a founder, DipteraHub gives me curated access to the most promising agritech startups in India. It's become my primary sourcing channel."</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>    
+    </div>
+  </section>
+
+  <section id="startup-form" class="py-16 md:py-24 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">Submit Your Agritech Startup</h2>
+        <p class="text-gray-600 mb-10 max-w-2xl mx-auto">Get your startup featured on AgriVentures India and connect with potential customers, partners and investors.</p>
+
+        <div class="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-8 md:p-12">
+          <div class="text-center mb-8">
+            <i class="fas fa-rocket text-5xl text-[var(--agri-green)] mb-4"></i>
+            <h3 class="text-2xl font-semibold mb-2">Ready to showcase your startup?</h3>
+            <p class="text-gray-600">Fill out our simple application form to be considered for featuring</p>
+          </div>
+
+          <!-- External link: include rel to prevent tabnabbing -->
+          <a href="https://forms.google.com/startup-form" target="_blank" rel="noopener noreferrer" class="inline-block bg-gradient-to-br from-[var(--agri-green)] to-[var(--saffron)] text-white px-8 py-4 rounded-md font-medium text-lg transition animate-bounce-slow">
+            Apply Now (Google Form)
+          </a>
+
+          <p class="text-sm text-gray-500 mt-4">You'll be redirected to our Google Form application</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-10">
+        <h3 class="text-xl font-semibold text-gray-600 mb-2">Supported By</h3>
+        <p class="text-gray-500 max-w-2xl mx-auto">Our partners who help make AgriVentures possible</p>
+      </div>
+
+      <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16">
+        <div class="w-32 h-16 bg-white p-2 flex items-center justify-center rounded-md shadow-sm">
+          <span class="text-gray-700 font-bold text-xl">NASSCOM</span>
+        </div>
+        <div class="w-32 h-16 bg-white p-2 flex items-center justify-center rounded-md shadow-sm">
+          <span class="text-gray-700 font-bold text-xl">a2i</span>
+        </div>
+        <div class="w-32 h-16 bg-white p-2 flex items-center justify-center rounded-md shadow-sm">
+          <span class="text-gray-700 font-bold text-xl">IIT Delhi</span>
+        </div>
+        <div class="w-32 h-16 bg-white p-2 flex items-center justify-center rounded-md shadow-sm">
+          <span class="text-gray-700 font-bold text-xl">ICAR</span>
+        </div>
+      </div>
+
+      <div class="text-center mt-10">
+        <p class="text-gray-500">Want to partner with us? <a href="#contact" class="text-[var(--agri-green)] hover:underline">Get in touch</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-16 md:py-24 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col lg:flex-row gap-8">
+        <div class="lg:w-1/2">
+          <h2 class="text-3xl font-bold text-gray-800 mb-6">Get In Touch</h2>
+          <p class="text-gray-600 mb-8">Have questions or want to learn more about AgriVentures India? Reach out to our team.</p>
+
+          <div class="space-y-4">
+            <div class="flex items-start">
+              <div class="bg-green-100 p-3 rounded-full mr-4">
+                <i class="fas fa-envelope text-[var(--agri-green)]"></i>
+              </div>
+              <div>
+                <h4 class="font-medium">Email Us</h4>
+                <a href="mailto:agriventure.in@gmail.com" class="text-[var(--agri-green)] hover:underline">agriventure.in@gmail.com</a>
+              </div>
+            </div>
+
+            <div class="flex items-start">
+              <div class="bg-green-100 p-3 rounded-full mr-4">
+                <i class="fas fa-map-marker-alt text-[var(--agri-green)]"></i>
+              </div>
+              <div>
+                <h4 class="font-medium">Our Office</h4>
+                <p class="text-gray-600">Bengaluru, Karnataka, India</p>
+              </div>
+            </div>
+
+            <div class="flex items-start">
+              <div class="bg-green-100 p-3 rounded-full mr-4">
+                <i class="fas fa-share-alt text-[var(--agri-green)]"></i>
+              </div>
+              <div>
+                <h4 class="font-medium">Follow Us</h4>
+                <div class="flex space-x-4 mt-1">
+                  <a href="https://www.linkedin.com/in/prajwalworld/" rel="noopener noreferrer" target="_blank" class="text-gray-600 hover:text-[var(--agri-green)]"><i class="fab fa-linkedin text-xl"></i></a>
+                  <a href="https://x.com/agriventures_In" rel="noopener noreferrer" target="_blank" class="text-gray-600 hover:text-[var(--agri-green)]"><i class="fab fa-twitter text-xl"></i></a>
+                  <a href="#" class="text-gray-600 hover:text-[var(--agri-green)]"><i class="fab fa-facebook text-xl"></i></a>
+                  <a href="https://www.instagram.com/agriventures.in/" class="text-gray-600 hover:text-[var(--agri-green)]"><i class="fab fa-instagram text-xl"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="md:w-1/2">
+          <form id="contact-form" class="bg-gray-50 p-6 md:p-8 rounded-lg" aria-label="Contact form">
+            <!-- HONEYPOT (paste earlier) -->
+<input type="text" name="_gotcha" id="_gotcha" style="display:none" autocomplete="off" aria-hidden="true" tabindex="-1">
+
+<div class="mb-4">
+  <label for="contact-name" class="block text-gray-700 mb-2">Name</label>
+  <input type="text" id="contact-name" name="name" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--agri-green)] focus:border-transparent" placeholder="Your name" required>
+</div>
+<div class="mb-4">
+  <label for="contact-email" class="block text-gray-700 mb-2">Email</label>
+  <input type="email" id="contact-email" name="email" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--agri-green)] focus:border-transparent" placeholder="Your email" required>
+</div>
+<div class="mb-4">
+  <label for="contact-subject" class="block text-gray-700 mb-2">Subject</label>
+  <input type="text" id="contact-subject" name="subject" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--agri-green)] focus:border-transparent" placeholder="Subject">
+</div>
+<div class="mb-4">
+  <label for="contact-message" class="block text-gray-700 mb-2">Message</label>
+  <textarea id="contact-message" name="message" rows="4" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--agri-green)] focus:border-transparent" placeholder="Your message" required></textarea>
+</div>
+
+            <button type="submit" class="w-full bg-[var(--agri-green)] hover:bg-green-700 text-white px-6 py-3 rounded-md font-medium transition">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div>
+          <div class="flex items-center mb-4">
+            <div class="w-10 h-10 bg-[var(--agri-green)] rounded-full flex items-center justify-center text-white font-bold text-xl mr-2">AV</div>
+            <span class="text-white font-bold text-xl">AgriVentures</span>
+          </div>
+          <p class="text-gray-400 mb-4">Connecting India's agritech ecosystem to drive innovation and growth in agriculture.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+          <ul class="space-y-2">
+            <li><a href="#about" class="text-gray-400 hover:text-white transition">About Us</a></li>
+            <li><a href="#benefits" class="text-gray-400 hover:text-white transition">Benefits</a></li>
+            <li><a href="#team" class="text-gray-400 hover:text-white transition">Our Team</a></li>
+            <li><a href="#community" class="text-gray-400 hover:text-white transition">Community</a></li>
+            <li><a href="#contact" class="text-gray-400 hover:text-white transition">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Resources</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white transition">Blog</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition">Reports</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition">Webinars</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition">Startup Guide</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Newsletter</h4>
+          <p class="text-gray-400 mb-4">Subscribe to get the latest agritech news and updates.</p>
+          <form class="flex" id="newsletter-form" aria-label="Newsletter subscribe">
+            <input type="text" name="_gotcha" id="_gotcha" style="display:none" autocomplete="off" aria-hidden="true" tabindex="-1">
+            <input type="text" name="_gotcha" id="_gotcha" style="display:none" autocomplete="off" aria-hidden="true" tabindex="-1">
+            <input type="email" name="email" placeholder="Your email" class="px-4 py-2 rounded-l-md w-full text-gray-800 focus:outline-none" required>
+            <button type="submit" class="bg-[var(--agri-green)] hover:bg-green-700 px-4 py-2 rounded-r-md text-white">
+              <i class="fas fa-paper-plane"></i>
             </button>
+          </form>
         </div>
-        
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
-                <a href="#about" class="text-gray-700 hover:text-green-600 py-2 transition">About</a>
-                <a href="#benefits" class="text-gray-700 hover:text-green-600 py-2 transition">Benefits</a>
-                <a href="#team" class="text-gray-700 hover:text-green-600 py-2 transition">Team</a>
-                <a href="#community" class="text-gray-700 hover:text-green-600 py-2 transition">Community</a>
-                <a href="#contact" class="text-gray-700 hover:text-green-600 py-2 transition">Contact</a>
-                <a href="#startup-form" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md font-medium text-center transition">
-                    Submit Your Startup
-                </a>
-            </div>
+      </div>
+
+      <div class="border-t border-gray-800 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2023 AgriVentures India. All rights reserved.</p>
+        <div class="flex space-x-6">
+          <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+          <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
         </div>
-    </nav>
+      </div>
+    </div>
+  </footer>
 
-    <!-- Hero Section -->
-    <section class="relative overflow-hidden py-20 md:py-32 lg:py-48" data-aos="fade">
-      <div class="absolute inset-0 bg-gradient-to-br from-green-900/30 via-purple-900/20 to-blue-900/30 backdrop-blur-lg"></div>
-      <div class="absolute inset-0 opacity-20" id="particles-js"></div>
-      <div class="relative z-10">
-        <div class="container mx-auto px-4">
-            <div class="max-w-3xl mx-auto text-center">
-                <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">Connecting India's Agritech Ecosystem</h1>
-                <p class="text-lg sm:text-xl md:text-2xl mb-6 sm:mb-8">Join India's fastest growing community of agritech innovators, farmers, investors and corporates. Be part of the revolution transforming agriculture with technology.</p>
-                
-                <div class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row justify-center sm:gap-4">
-                    <a href="#community-form" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-md font-medium text-lg transition animate-bounce-slow">
-                        Join Our Community
-                    </a>
-                    <a href="#startup-form" class="bg-white hover:bg-gray-100 text-green-600 px-8 py-3 rounded-md font-medium text-lg transition">
-                        Submit Your Startup
-                    </a>
-                </div>
-                
-                <div class="mt-10 flex justify-center">
-                    <div class="bg-white bg-opacity-20 backdrop-filter backdrop-blur-sm rounded-full p-3 inline-flex items-center">
-                        <div class="flex -space-x-2">
-                            <img class="w-10 h-10 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/women/12.jpg" alt="">
-                            <img class="w-10 h-10 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/men/32.jpg" alt="">
-                            <img class="w-10 h-10 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/women/45.jpg" alt="">
-                        </div>
-                        <span class="ml-3 text-sm">Join 1,200+ members</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- Libraries & Scripts (deferred / conditionally loaded) -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js" defer></script>
 
-    <!-- Stats Section -->
-    <section class="bg-green-50 py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 text-center">
-                <div class="bg-white p-6 rounded-lg shadow-sm">
-                    <div class="text-green-600 text-3xl font-bold mb-2">6,000+</div>
-                    <div class="text-gray-600">Agritech Startups</div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-sm">
-                    <div class="text-green-600 text-3xl font-bold mb-2">$3.4B</div>
-                    <div class="text-gray-600">Funding in 2023</div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-sm">
-                    <div class="text-green-600 text-3xl font-bold mb-2">120M+</div>
-                    <div class="text-gray-600">Farmers Impacted</div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-sm">
-                    <div class="text-green-600 text-3xl font-bold mb-2">1,200+</div>
-                    <div class="text-gray-600">Community Members</div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <script>
+    /******************************
+     *  Client-Side Enhancements
+     ******************************/
 
-    <!-- About Section -->
-    <section id="about" class="py-16 md:py-24 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col lg:flex-row items-center">
-                <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-10 order-2 lg:order-1">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-6">About AgriVentures India</h2>
-                    <p class="text-gray-600 mb-6">AgriVentures India is the first dedicated platform connecting all stakeholders in India's booming agritech ecosystem. We're building the "Product Hunt for Agritech" - a community-driven platform to discover, support and grow innovative agricultural technology solutions.</p>
-                    <p class="text-gray-600 mb-6">With over 6,000 active agritech startups in India and growing investor interest, there's never been a better time to bring together founders, farmers, investors and corporates to collaborate and accelerate innovation in this critical sector.</p>
-                    <div class="bg-green-50 border-l-4 border-green-600 p-4">
-                        <p class="text-gray-700 italic">"India's agritech sector is projected to reach $24 billion by 2025. AgriVentures is creating the platform to connect and grow this ecosystem."</p>
-                    </div>
-                </div>
-                <div class="md:w-1/2">
-                    <img src="shirt.png" alt="Farmers using technology" class="rounded-lg shadow-lg w-full">
-                </div>
-            </div>
-        </div>
-    </section>
+    // AOS init (deferred)
+    document.addEventListener('DOMContentLoaded', function () {
+      if (window.AOS) AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+    });
 
-    <!-- Benefits Section -->
-    <section id="benefits" class="py-16 md:py-24 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Why Join AgriVentures?</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Discover the benefits of being part of India's premier agritech community</p>
-            </div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="glass-card p-8 rounded-xl feature-card hover-3d transition-all duration-500 transform-style-preserve-3d">
-                    <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-6">
-                        <i class="fas fa-network-wired text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-3">Networking</h3>
-                    <p class="text-gray-600">Connect with agritech founders, investors, farmers and industry leaders through our exclusive events and online platform.</p>
-                </div>
-                
-                <div class="bg-white p-8 rounded-lg shadow-sm feature-card transition duration-300">
-                    <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-6">
-                        <i class="fas fa-bullhorn text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-3">Startup Visibility</h3>
-                    <p class="text-gray-600">Showcase your agritech startup to potential customers, partners and investors through our featured listings.</p>
-                </div>
-                
-                <div class="bg-white p-8 rounded-lg shadow-sm feature-card transition duration-300">
-                    <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-6">
-                        <i class="fas fa-chart-line text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-3">Market Insights</h3>
-                    <p class="text-gray-600">Get access to exclusive reports, trends and data about India's rapidly evolving agritech landscape.</p>
-                </div>
-                
-                <div class="bg-white p-8 rounded-lg shadow-sm feature-card transition duration-300">
-                    <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-6">
-                        <i class="fas fa-handshake text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-3">Partnerships</h3>
-                    <p class="text-gray-600">Discover collaboration opportunities with corporates, research institutions and government initiatives.</p>
-                </div>
-                
-                <div class="bg-white p-8 rounded-lg shadow-sm feature-card transition duration-300">
-                    <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-6">
-                        <i class="fas fa-graduation-cap text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-3">Learning Resources</h3>
-                    <p class="text-gray-600">Access webinars, workshops and guides on everything from farm tech to fundraising in agritech.</p>
-                </div>
-                
-                <div class="bg-white p-8 rounded-lg shadow-sm feature-card transition duration-300">
-                    <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-6">
-                        <i class="fas fa-trophy text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-3">Recognition</h3>
-                    <p class="text-gray-600">Get featured in our "Agritech Startup of the Week" and annual awards recognizing innovation in the sector.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    // Conditional loader for heavy visual libs (Three/Vanta/Particles)
+    function loadScriptOnce(src) {
+      return new Promise((resolve, reject) => {
+        if (document.querySelector('script[data-src="'+src+'"]')) return resolve();
+        const s = document.createElement('script');
+        s.src = src;
+        s.defer = true;
+        s.async = false;
+        s.setAttribute('data-src', src);
+        s.onload = resolve;
+        s.onerror = reject;
+        document.body.appendChild(s);
+      });
+    }
 
-    <!-- Team Section -->
-    <section id="team" class="py-16 md:py-24 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Meet Our Team</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Passionate leaders driving India's agritech revolution</p>
-            </div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                <div class="bg-gray-50 p-6 rounded-lg text-center">
-                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Priya Sharma" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-green-100">
-                    <h3 class="text-xl font-semibold mb-1">Priya Sharma</h3>
-                    <p class="text-green-600 mb-3">Founder & CEO</p>
-                    <p class="text-gray-600">Former agri-tech entrepreneur with 10+ years experience building solutions for smallholder farmers.</p>
-                    <div class="flex justify-center space-x-3 mt-4">
-                        <a href="#" class="text-gray-500 hover:text-green-600"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="text-gray-500 hover:text-green-600"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-                
-                <div class="bg-gray-50 p-6 rounded-lg text-center">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rahul Patel" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-green-100">
-                    <h3 class="text-xl font-semibold mb-1">Rahul Patel</h3>
-                    <p class="text-green-600 mb-3">Co-Founder & CTO</p>
-                    <p class="text-gray-600">Tech leader with expertise in agricultural IoT and data platforms for precision farming.</p>
-                    <div class="flex justify-center space-x-3 mt-4">
-                        <a href="#" class="text-gray-500 hover:text-green-600"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="text-gray-500 hover:text-green-600"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-                
-                <div class="bg-gray-50 p-6 rounded-lg text-center">
-                    <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Arjun Mehta" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-green-100">
-                    <h3 class="text-xl font-semibold mb-1">Arjun Mehta</h3>
-                    <p class="text-green-600 mb-3">Head of Community</p>
-                    <p class="text-gray-600">Former VC associate focused on agritech investments and startup ecosystem building.</p>
-                    <div class="flex justify-center space-x-3 mt-4">
-                        <a href="#" class="text-gray-500 hover:text-green-600"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="text-gray-500 hover:text-green-600"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    // Determine if we should enable advanced visuals
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    <!-- Community Section -->
-    <section id="community" class="py-16 md:py-24 bg-green-600 text-white">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col lg:flex-row items-center">
-                <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-10">
-                    <h2 class="text-3xl font-bold mb-6">Join Our Growing Community</h2>
-                    <p class="mb-6 opacity-90">Be part of India's most vibrant agritech network. Get access to exclusive content, networking opportunities, and early invites to our platform launch.</p>
-                    
-                    <form id="community-form" class="space-y-4">
-                        <div>
-                            <label for="name" class="block mb-1">Name</label>
-                            <input type="text" id="name" class="w-full px-4 py-2 rounded-md bg-green-700 bg-opacity-30 border border-green-500 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent placeholder-green-200" placeholder="Your name">
-                        </div>
-                        <div>
-                            <label for="email" class="block mb-1">Email</label>
-                            <input type="email" id="email" class="w-full px-4 py-2 rounded-md bg-green-700 bg-opacity-30 border border-green-500 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent placeholder-green-200" placeholder="Your email address">
-                        </div>
-                        <div>
-                            <label for="role" class="block mb-1">I'm a</label>
-                            <select id="role" class="w-full px-4 py-2 rounded-md bg-green-700 bg-opacity-30 border border-green-500 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent text-white">
-                                <option value="" disabled selected>Select your role</option>
-                                <option value="founder">Agritech Founder</option>
-                                <option value="farmer">Farmer/Farmer Group</option>
-                                <option value="investor">Investor</option>
-                                <option value="corporate">Corporate</option>
-                                <option value="researcher">Researcher</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="w-full bg-white text-green-600 hover:bg-gray-100 px-6 py-3 rounded-md font-medium transition">
-                            Join Now
-                        </button>
-                        <p class="text-sm opacity-70">We respect your privacy. No spam, ever.</p>
-                    </form>
-                </div>
-                <div class="md:w-1/2">
-                    <div class="bg-white bg-opacity-10 p-8 rounded-lg backdrop-filter backdrop-blur-sm">
-                        <h3 class="text-xl font-semibold mb-4">What members say</h3>
-                        
-                        <div class="space-y-6">
-                            <div class="flex items-start">
-                                <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="Ananya Reddy" class="w-12 h-12 rounded-full mr-4 object-cover">
-                                <div>
-                                    <p class="font-medium">Ananya Reddy</p>
-                                    <p class="text-sm opacity-80 mb-2">Founder, FarmTech Solutions</p>
-                                    <p class="italic">"Through AgriVentures, we connected with three investors who were perfect fits for our Series A. The quality of connections here is unmatched."</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <img src="https://randomuser.me/api/portraits/men/54.jpg" alt="Vikram Singh" class="w-12 h-12 rounded-full mr-4 object-cover">
-                                <div>
-                                    <p class="font-medium">Vikram Singh</p>
-                                    <p class="text-sm opacity-80 mb-2">Partner, GreenGrowth Ventures</p>
-                                    <p class="italic">"As an investor, AgriVentures gives me curated access to the most promising agritech startups in India. It's become my primary sourcing channel."</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    if (!isMobile && !prefersReduced) {
+      // Load Three & Vanta and then initialize
+      loadScriptOnce('https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js')
+        .then(() => loadScriptOnce('https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js'))
+        .then(() => {
+          if (typeof VANTA !== 'undefined' && document.getElementById('vanta-canvas')) {
+            try {
+              VANTA.NET({
+                el: "#vanta-canvas",
+                color: 0x2f9e44,
+                backgroundColor: 0x061124,
+                points: 14,
+                maxDistance: 22,
+                spacing: 16,
+                showDots: false,
+                mouseControls: true,
+                touchControls: false,
+                gyroControls: false
+              });
+            } catch (e) {
+              console.warn('Vanta init failed', e);
+            }
+          }
+        }).catch(()=>{/* fail silently */});
 
-    <!-- Startup Showcase Section -->
-    <section id="startup-form" class="py-16 md:py-24 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Submit Your Agritech Startup</h2>
-                <p class="text-gray-600 mb-10 max-w-2xl mx-auto">Get your startup featured on AgriVentures India and connect with potential customers, partners and investors.</p>
-                
-                <div class="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-8 md:p-12">
-                    <div class="text-center mb-8">
-                        <i class="fas fa-rocket text-5xl text-green-600 mb-4"></i>
-                        <h3 class="text-2xl font-semibold mb-2">Ready to showcase your startup?</h3>
-                        <p class="text-gray-600">Fill out our simple application form to be considered for featuring</p>
-                    </div>
-                    
-                    <a href="https://forms.google.com/startup-form" target="_blank" class="inline-block bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-md font-medium text-lg transition animate-bounce-slow">
-                        Apply Now (Google Form)
-                    </a>
-                    
-                    <p class="text-sm text-gray-500 mt-4">You'll be redirected to our Google Form application</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Partners Section -->
-    <section class="py-12 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-10">
-                <h3 class="text-xl font-semibold text-gray-600 mb-2">Supported By</h3>
-                <p class="text-gray-500 max-w-2xl mx-auto">Our partners who help make AgriVentures possible</p>
-            </div>
-            
-            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16">
-                <div class="w-32 h-16 bg-white p-2 flex items-center justify-center rounded-md shadow-sm">
-                    <span class="text-gray-700 font-bold text-xl">NASSCOM</span>
-                </div>
-                <div class="w-32 h-16 bg-white p-2 flex items-center justify-center rounded-md shadow-sm">
-                    <span class="text-gray-700 font-bold text-xl">a2i</span>
-                </div>
-                <div class="w-32 h-16 bg-white p-2 flex items-center justify-center rounded-md shadow-sm">
-                    <span class="text-gray-700 font-bold text-xl">IIT Delhi</span>
-                </div>
-                <div class="w-32 h-16 bg-white p-2 flex items-center justify-center rounded-md shadow-sm">
-                    <span class="text-gray-700 font-bold text-xl">ICAR</span>
-                </div>
-            </div>
-            
-            <div class="text-center mt-10">
-                <p class="text-gray-500">Want to partner with us? <a href="#contact" class="text-green-600 hover:underline">Get in touch</a></p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-16 md:py-24 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col lg:flex-row gap-8">
-                <div class="lg:w-1/2">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-6">Get In Touch</h2>
-                    <p class="text-gray-600 mb-8">Have questions or want to learn more about AgriVentures India? Reach out to our team.</p>
-                    
-                    <div class="space-y-4">
-                        <div class="flex items-start">
-                            <div class="bg-green-100 p-3 rounded-full mr-4">
-                                <i class="fas fa-envelope text-green-600"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">Email Us</h4>
-                                <a href="mailto:hello@agriventures.in" class="text-green-600 hover:underline">hello@agriventures.in</a>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="bg-green-100 p-3 rounded-full mr-4">
-                                <i class="fas fa-map-marker-alt text-green-600"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">Our Office</h4>
-                                <p class="text-gray-600">Bengaluru, Karnataka, India</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="bg-green-100 p-3 rounded-full mr-4">
-                                <i class="fas fa-share-alt text-green-600"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">Follow Us</h4>
-                                <div class="flex space-x-4 mt-1">
-                                    <a href="#" class="text-gray-600 hover:text-green-600"><i class="fab fa-linkedin text-xl"></i></a>
-                                    <a href="#" class="text-gray-600 hover:text-green-600"><i class="fab fa-twitter text-xl"></i></a>
-                                    <a href="#" class="text-gray-600 hover:text-green-600"><i class="fab fa-facebook text-xl"></i></a>
-                                    <a href="#" class="text-gray-600 hover:text-green-600"><i class="fab fa-instagram text-xl"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="md:w-1/2">
-                    <form class="bg-gray-50 p-6 md:p-8 rounded-lg">
-                        <div class="mb-4">
-                            <label for="contact-name" class="block text-gray-700 mb-2">Name</label>
-                            <input type="text" id="contact-name" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent" placeholder="Your name">
-                        </div>
-                        <div class="mb-4">
-                            <label for="contact-email" class="block text-gray-700 mb-2">Email</label>
-                            <input type="email" id="contact-email" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent" placeholder="Your email">
-                        </div>
-                        <div class="mb-4">
-                            <label for="contact-subject" class="block text-gray-700 mb-2">Subject</label>
-                            <input type="text" id="contact-subject" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent" placeholder="Subject">
-                        </div>
-                        <div class="mb-4">
-                            <label for="contact-message" class="block text-gray-700 mb-2">Message</label>
-                            <textarea id="contact-message" rows="4" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent" placeholder="Your message"></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-md font-medium transition">
-                            Send Message
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div>
-                    <div class="flex items-center mb-4">
-                        <div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-xl mr-2">AV</div>
-                        <span class="text-white font-bold text-xl">AgriVentures</span>
-                    </div>
-                    <p class="text-gray-400 mb-4">Connecting India's agritech ecosystem to drive innovation and growth in agriculture.</p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#about" class="text-gray-400 hover:text-white transition">About Us</a></li>
-                        <li><a href="#benefits" class="text-gray-400 hover:text-white transition">Benefits</a></li>
-                        <li><a href="#team" class="text-gray-400 hover:text-white transition">Our Team</a></li>
-                        <li><a href="#community" class="text-gray-400 hover:text-white transition">Community</a></li>
-                        <li><a href="#contact" class="text-gray-400 hover:text-white transition">Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Resources</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Blog</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Reports</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Webinars</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Startup Guide</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Newsletter</h4>
-                    <p class="text-gray-400 mb-4">Subscribe to get the latest agritech news and updates.</p>
-                    <form class="flex">
-                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-md w-full text-gray-800 focus:outline-none">
-                        <button type="submit" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-r-md">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-800 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2023 AgriVentures India. All rights reserved.</p>
-                <div class="flex space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
-                    <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script>
-        // Initialize AOS animations
-        AOS.init({
-            duration: 800,
-            easing: 'ease-in-out',
-            once: true
-        });
-
-        // Initialize Vanta.js background
-        VANTA.NET({
-            el: "#vanta-bg",
-            color: 0x3a83ff,
-            backgroundColor: 0x0,
-            points: 12,
-            maxDistance: 20,
-            spacing: 15
-        });
-
-        // Simple cursor tracking
-        const cursor = document.querySelector('.cursor');
-        const cursorFollower = document.querySelector('.cursor-follower');
-        
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            
-            // Slight delay for follower
-            setTimeout(() => {
-                cursorFollower.style.left = e.clientX + 'px';
-                cursorFollower.style.top = e.clientY + 'px';
-            }, 50);
-        });
-        
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-        
-        // Interactive elements effects
-        document.querySelectorAll('a, button, .hover-3d, .feature-card').forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.classList.add('active');
-                cursorFollower.classList.add('active');
-            });
-            
-            el.addEventListener('mouseleave', () => {
-                cursor.classList.remove('active');
-                cursorFollower.classList.remove('active');
-            });
-        });
-
-        // Particles.js config
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 80, density: { enable: true, value_area: 800 } },
+      // Load particles for subtle overlay (lower budget)
+      loadScriptOnce('https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js')
+        .then(() => {
+          if (window.particlesJS && document.getElementById('particles-js')) {
+            particlesJS('particles-js', {
+              particles: {
+                number: { value: 35, density: { enable: true, value_area: 800 } },
                 color: { value: "#ffffff" },
                 shape: { type: "circle" },
-                opacity: { value: 0.5, random: true },
-                size: { value: 3, random: true },
-                line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
-                move: { enable: true, speed: 2, direction: "none", random: true, straight: false, out_mode: "out" }
-            },
-            interactivity: {
+                opacity: { value: .24, random: true },
+                size: { value: 2.1, random: true },
+                line_linked: { enable: true, distance: 110, color: "#ffffff", opacity: 0.08, width: 0.9 },
+                move: { enable: true, speed: 0.8, random: true, out_mode: "out" }
+              },
+              interactivity: {
                 detect_on: "canvas",
                 events: {
-                    onhover: { enable: true, mode: "repulse" },
-                    onclick: { enable: true, mode: "push" },
-                    resize: true
+                  onhover: { enable: true, mode: "repulse" },
+                  onclick: { enable: true, mode: "push" },
+                  resize: true
                 }
-            }
-        });
+              }
+            });
+          }
+        }).catch(()=>{/* fail silently */});
+    } else {
+      // hide/disable heavy visual nodes for reduced motion or mobile
+      const p = document.getElementById('particles-js');
+      if (p) p.style.display = 'none';
+      const vc = document.getElementById('vanta-canvas');
+      if (vc) vc.style.display = 'none';
+    }
 
-        // 3D tilt effect for cards
-        document.querySelectorAll('.feature-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-                const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-                card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-            });
-            
-            card.addEventListener('mouseenter', () => {
-                card.style.transition = 'none';
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transition = 'all 0.5s ease';
-                card.style.transform = 'rotateY(0deg) rotateX(0deg)';
-            });
-        });
-        // Mobile menu toggle
-        document.getElementById('mobile-menu-button').addEventListener('click', function() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-            this.querySelector('i').classList.toggle('fa-bars');
-            this.querySelector('i').classList.toggle('fa-times');
-        });
+    /**********************
+     * Cursor & Hover
+     **********************/
+    (function () {
+      const cursor = document.querySelector('.cursor');
+      const follower = document.querySelector('.cursor-follower');
+      if (!cursor || !follower) return;
 
-        // Close menu when clicking on links
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('mobile-menu').classList.add('hidden');
-                document.getElementById('mobile-menu-button').querySelector('i').classList.add('fa-bars');
-                document.getElementById('mobile-menu-button').querySelector('i').classList.remove('fa-times');
-            });
-        });
+      // Hide custom cursor for reduced-motion / mobile (handled via CSS), but ensure no pointer: none anywhere
+      let mouseX = 0, mouseY = 0;
+      let posX = 0, posY = 0;
 
-        // Form submission handling (example)
-        document.getElementById('community-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for joining our community! We\'ll be in touch soon.');
-            this.reset();
-        });
+      // requestAnimationFrame loop for smooth follower
+      function animate() {
+        posX += (mouseX - posX) * 0.18;
+        posY += (mouseY - posY) * 0.18;
+        follower.style.transform = `translate(${posX - 9}px, ${posY - 9}px)`; // center follower
+        cursor.style.transform = `translate(${mouseX - 3}px, ${mouseY - 3}px)`;
+        requestAnimationFrame(animate);
+      }
+      animate();
 
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                    
-                    // Close mobile menu if open
-                    const mobileMenu = document.getElementById('mobile-menu');
-                    if (!mobileMenu.classList.contains('hidden')) {
-                        mobileMenu.classList.add('hidden');
-                    }
-                }
-            });
-        });
-    </script>
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+
+      // delegated hover enter/leave to toggle active state
+      document.addEventListener('mouseover', (e) => {
+        const t = e.target.closest('a, button, .hover-3d, .feature-card');
+        if (t) { cursor.classList.add('active'); follower.classList.add('active'); }
+      });
+      document.addEventListener('mouseout', (e) => {
+        const t = e.target.closest('a, button, .hover-3d, .feature-card');
+        if (!t) { cursor.classList.remove('active'); follower.classList.remove('active'); }
+      });
+    })();
+
+    /**********************
+     * Mobile menu (ARIA)
+     **********************/
+    (function () {
+      const btn = document.getElementById('mobile-menu-button');
+      const menu = document.getElementById('mobile-menu');
+      if (!btn || !menu) return;
+
+      btn.addEventListener('click', function () {
+        const expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', String(!expanded));
+        if (!menu.classList.contains('hidden')) {
+          menu.classList.add('hidden');
+          menu.setAttribute('aria-hidden', 'true');
+        } else {
+          menu.classList.remove('hidden');
+          menu.setAttribute('aria-hidden', 'false');
+        }
+
+        const i = this.querySelector('i');
+        if (i) {
+          i.classList.toggle('fa-bars');
+          i.classList.toggle('fa-times');
+        }
+      });
+
+      // close menu on link click
+      menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        menu.classList.add('hidden');
+        menu.setAttribute('aria-hidden', 'true');
+        btn.setAttribute('aria-expanded', 'false');
+        const i = btn.querySelector('i');
+        if (i) { i.classList.remove('fa-times'); i.classList.add('fa-bars'); }
+      }));
+    })();
+
+    /**********************
+     * Forms: small UX enhancements
+     **********************/
+ 
+     <script>
+/* ========== AgriVentures forms → Google Apps Script (client) ========== */
+const APPS_SCRIPT_ENDPOINT = "https://script.google.com/macros/s/AKfycbyMKeyO-cKOmjud2kwobtIyIOCU3IN0-EUXlAL2QNewrOWi8Wp-nqjTlBYZzTGpKW5J/exec";
+
+/**
+ * postFormToAppsScript
+ * - formEl: HTMLFormElement
+ * - formType: 'community' | 'contact' | 'newsletter'
+ */
+async function postFormToAppsScript(formEl, formType) {
+  // Build payload from form. Ensure we send formType and _gotcha.
+  const fd = new FormData(formEl);
+  if (!fd.has('_gotcha')) fd.append('_gotcha', '');
+  fd.set('formType', formType);
+
+  // Client validation basics
+  const data = Object.fromEntries(fd.entries());
+  if (formType === 'community' && (!data.name || !data.email)) {
+    return { ok:false, message: 'Name and email are required.' };
+  }
+  if (formType === 'contact' && (!data.name || !data.email || !data.message)) {
+    return { ok:false, message: 'Name, email and message are required.' };
+  }
+  if (formType === 'newsletter' && (!data.email)) {
+    return { ok:false, message: 'Email is required.' };
+  }
+
+  try {
+    const res = await fetch(APPS_SCRIPT_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new URLSearchParams(data) // Apps Script will parse form-encoded body
+    });
+    const json = await res.json();
+    return { ok: json.status === 'success', json };
+  } catch (err) {
+    return { ok:false, message: err.message || 'Network error' };
+  }
+}
+
+/* ====== Wire #community-form ====== */
+const communityForm = document.getElementById('community-form');
+if (communityForm) {
+  communityForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = communityForm.querySelector('button[type="submit"]');
+    const statusEl = document.getElementById('community-feedback');
+
+    if (statusEl) { statusEl.textContent = 'Sending...'; }
+    if (btn) { btn.disabled = true; btn.setAttribute('aria-busy','true'); }
+
+    const resp = await postFormToAppsScript(communityForm, 'community');
+
+    if (resp.ok) {
+      if (statusEl) statusEl.textContent = 'Thanks — we received your request! We will be in touch.';
+      communityForm.reset();
+    } else {
+      if (statusEl) statusEl.textContent = resp.message || 'Submission failed. Please try again later.';
+      console.error('Community form error', resp);
+    }
+
+    if (btn) { btn.disabled = false; btn.removeAttribute('aria-busy'); }
+  });
+}
+
+/* ====== Wire #contact-form ====== */
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = contactForm.querySelector('button[type="submit"]');
+
+    // show accessible inline status
+    let statusEl = contactForm.querySelector('.contact-status');
+    if (!statusEl) {
+      statusEl = document.createElement('div');
+      statusEl.className = 'contact-status text-sm mt-3';
+      statusEl.setAttribute('role','status');
+      contactForm.appendChild(statusEl);
+    }
+    statusEl.textContent = 'Sending...';
+    if (btn) { btn.disabled = true; btn.setAttribute('aria-busy','true'); }
+
+    const resp = await postFormToAppsScript(contactForm, 'contact');
+
+    if (resp.ok) {
+      statusEl.textContent = 'Message sent — thank you!';
+      contactForm.reset();
+    } else {
+      statusEl.textContent = resp.message || 'Failed to send message. Please try later.';
+      console.error('Contact form error', resp);
+    }
+
+    if (btn) { btn.disabled = false; btn.removeAttribute('aria-busy'); }
+  });
+}
+
+/* ====== Wire #newsletter-form ====== */
+const newsletterForm = document.getElementById('newsletter-form');
+if (newsletterForm) {
+  newsletterForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = newsletterForm.querySelector('button[type="submit"]');
+
+    let statusEl = newsletterForm.querySelector('.newsletter-status');
+    if (!statusEl) {
+      statusEl = document.createElement('div');
+      statusEl.className = 'newsletter-status text-sm mt-2';
+      statusEl.setAttribute('role','status');
+      newsletterForm.appendChild(statusEl);
+    }
+
+    statusEl.textContent = 'Sending...';
+    if (btn) { btn.disabled = true; btn.setAttribute('aria-busy','true'); }
+
+    const resp = await postFormToAppsScript(newsletterForm, 'newsletter');
+
+    if (resp.ok) {
+      statusEl.textContent = 'Subscribed — thank you!';
+      newsletterForm.reset();
+    } else {
+      statusEl.textContent = resp.message || 'Subscription failed. Try again later.';
+      console.error('Newsletter form error', resp);
+    }
+
+    if (btn) { btn.disabled = false; btn.removeAttribute('aria-busy'); }
+  });
+}
+</script>
+
+  
 </body>
+
 </html>
