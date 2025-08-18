@@ -23,23 +23,41 @@
       --accent-saffron: #FF7F11;
       --bg-top: #061124;
       --bg-bottom: #07102a;
-      --glass-bg: rgba(255,255,255,0.06);
-      --glass-border: rgba(255,255,255,0.08);
-      --glass-blur: 10px;
+      --glass-bg: rgba(255,255,255,0.08);
+      --glass-border: rgba(255,255,255,0.12);
+      --glass-blur: 16px;
       --text-on-dark: #E6F8EE;
-      --muted-light: rgba(230,248,238,0.7);
-      --muted-dark: #6b7280;
-      --max-width: 1100px;
-      --nav-height: 66px;
-      --radius: 12px;
+      --muted-light: rgba(230,248,238,0.8);
+      --muted-dark: rgba(107,114,128,0.8);
+      --max-width: 1200px;
+      --nav-height: 80px;
+      --radius: 16px;
       --success-green: #2bd37b;
+      --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.3);
+      --shadow-xl: 0 20px 50px -12px rgba(0,0,0,0.4);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     html,body{height:100%;margin:0;font-family:"Space Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:linear-gradient(180deg,var(--bg-top),var(--bg-bottom) 60%);color:var(--text-on-dark);-webkit-font-smoothing:antialiased}
     .container{max-width:var(--max-width);margin:0 auto;padding:0 16px;box-sizing:border-box}
 
     /* NAV */
-    nav{position:sticky;top:0;z-index:100;background:linear-gradient(180deg, rgba(1,4,10,0.45), rgba(2,6,23,0.3));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.03)}
+    nav{
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:linear-gradient(180deg, rgba(1,4,10,0.5), rgba(2,6,23,0.35));
+      backdrop-filter:blur(var(--glass-blur));
+      -webkit-backdrop-filter:blur(var(--glass-blur));
+      border-bottom:1px solid rgba(255,255,255,0.05);
+      box-shadow:var(--shadow-lg);
+      transition:var(--transition);
+    }
+    nav.scrolled {
+      background:rgba(6,17,36,0.85);
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+    }
     .nav-inner{height:var(--nav-height);display:flex;align-items:center;justify-content:space-between;gap:12px}
     .logo{display:flex;align-items:center;gap:10px}
     .logo img{width:44px;height:44px;border-radius:10px;display:block}
@@ -69,9 +87,38 @@
     input::placeholder,textarea::placeholder{color:rgba(230,248,238,0.52)}
     input:focus,select:focus,textarea:focus{outline:2px solid rgba(47,158,68,0.12);box-shadow:0 8px 28px rgba(47,158,68,0.06);border-color:var(--accent-green)}
 
-    .btn { display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:700 }
-    .btn-primary{background:linear-gradient(90deg,var(--accent-green),var(--accent-green));color:#fff}
-    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent-green)}
+    .btn {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:12px 24px;
+      border-radius:12px;
+      border:0;
+      cursor:pointer;
+      font-weight:700;
+      transition:var(--transition);
+      transform:translateY(0);
+      box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+    .btn-primary{
+      background:linear-gradient(90deg,var(--accent-green),var(--accent-saffron));
+      color:#fff;
+      box-shadow:0 4px 15px -3px rgba(47,158,68,0.3);
+    }
+    .btn-primary:hover {
+      transform:translateY(-2px);
+      box-shadow:0 10px 25px -5px rgba(47,158,68,0.4);
+    }
+    .btn-ghost{
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.1);
+      color:var(--accent-green);
+    }
+    .btn-ghost:hover {
+      background:rgba(255,255,255,0.1);
+      transform:translateY(-2px);
+      box-shadow:0 10px 15px -3px rgba(255,255,255,0.1);
+    }
 
     .feedback{margin-top:10px;font-size:0.95rem;color:var(--muted-light)}
 
@@ -108,6 +155,32 @@
 
     /* accessibility */
     button:focus, a:focus, input:focus, select:focus, textarea:focus{outline-offset:3px}
+  </style>
+  <!-- Custom cursor -->
+  <style>
+    .cursor {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(47, 158, 68, 0.5);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      mix-blend-mode: screen;
+      z-index: 9999;
+      transition: transform 0.1s ease;
+    }
+    .cursor-follower {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 9998;
+      transition: all 0.3s ease;
+    }
   </style>
 </head>
 
@@ -153,9 +226,11 @@
 
   <!-- HERO -->
   <header class="hero" role="banner" aria-label="Hero">
-    <div id="vantaContainer" aria-hidden="true" style="position:absolute;inset:0;z:-2"></div>
+    <div id="vantaContainer" aria-hidden="true" style="position:absolute;inset:0;z-index:0;opacity:0;transition:opacity 1.2s ease">
+      <div style="position:absolute;inset:0;background:linear-gradient(180deg,var(--bg-top),var(--bg-bottom) 60%);z-index:1" id="vantaFallback"></div>
+    </div>
 
-    <div class="hero-inner container">
+    <div class="hero-inner container" style="position:relative;z-index:2">
       <h1 class="hero-title">Connecting India's Agritech Ecosystem</h1>
       <p class="hero-sub">Join India's fastest growing community of agritech innovators, farmers, investors and corporates. Be part of the revolution transforming agriculture with technology.</p>
 
@@ -238,11 +313,11 @@
         <strong>Prajwal Bedavatti</strong><div style="color:var(--muted-dark)">Founder & CEO</div>
       </div>
       <div style="text-align:center;padding:12px">
-        <img src="https://img.freepik.com/premium-photo/3d-cartoon-software-developer-generative-ai_644690-101447.jpg" alt="Member" style="width:110px;height:110px;border-radius:999px;display:block;margin:0 auto 10px">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Member" style="width:110px;height:110px;border-radius:999px;display:block;margin:0 auto 10px">
         <strong>To be hired</strong><div style="color:var(--muted-dark)">Co-Founder & CTO</div>
       </div>
       <div style="text-align:center;padding:12px">
-        <img src="https://img.freepik.com/free-photo/view-3d-practicing-lawyer_23-2151023413.jpg?t=st=1755543601~exp=1755547201~hmac=d5d6ed1a916db467e150a8e89c56ee94a79e4bd945ddfd31564c0a2b92c44b69&w=2000" alt="Member" style="width:110px;height:110px;border-radius:999px;display:block;margin:0 auto 10px">
+        <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Member" style="width:110px;height:110px;border-radius:999px;display:block;margin:0 auto 10px">
         <strong>To be hired</strong><div style="color:var(--muted-dark)">Head of Community</div>
       </div>
     </div>
@@ -363,25 +438,57 @@
 
   <!-- SUCCESS OVERLAY -->
   <div id="successOverlay" class="overlay" role="alertdialog" aria-modal="true" aria-hidden="true" aria-labelledby="successTitle" aria-describedby="successMessage">
-    <div class="overlay-card">
-      <svg class="checkmark" viewBox="0 0 52 52" aria-hidden="true">
-        <path d="M14 27 l8 8 16-20"></path>
+    <div class="overlay-card" style="transform:translateY(20px);transition:transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)">
+      <svg class="checkmark" viewBox="0 0 52 52" aria-hidden="true" style="width:80px;height:80px">
+        <circle cx="26" cy="26" r="24" stroke="rgba(43,211,123,0.2)" stroke-width="2" fill="none"/>
+        <path d="M14 27 l8 8 16-20" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      <h3 id="successTitle" style="margin:10px 0 4px">Thanks — we received your submission</h3>
-      <p id="successMessage" style="margin:0;color:var(--muted-light)">We'll get back to you soon.</p>
+      <h3 id="successTitle" style="margin:16px 0 8px;font-size:1.4rem">Thank you for your submission!</h3>
+      <p id="successMessage" style="margin:0;color:var(--muted-light);max-width:320px;line-height:1.5">We've received your details and will get back to you shortly.</p>
 
-      <div class="confetti" aria-hidden="true">
+      <div class="confetti" aria-hidden="true" style="height:50px;margin:20px 0">
         <div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div>
+        <div class="c" style="left:16%;animation-delay:.24s;background:#ffd43b"></div>
+        <div class="c" style="left:36%;animation-delay:.28s;background:#00b4ff"></div>
+        <div class="c" style="left:56%;animation-delay:.32s;background:#d6336c"></div>
       </div>
 
-      <div style="margin-top:14px">
-        <button id="overlayClose" class="btn btn-ghost">Close</button>
+      <div style="margin-top:20px">
+        <button id="overlayClose" class="btn btn-primary" style="padding:12px 24px">Got it!</button>
       </div>
     </div>
   </div>
 
   <!-- SCRIPTS (progressive enhancement) -->
+  <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
   <script>
+    // Initialize ScrollReveal
+    const sr = ScrollReveal({
+      origin: 'bottom',
+      distance: '40px',
+      duration: 800,
+      delay: 200,
+      reset: false,
+      easing: 'cubic-bezier(0.5, 0, 0, 1)',
+      viewFactor: 0.2
+    });
+
+    // Configure scroll animations
+    ready(() => {
+      sr.reveal('.hero-title, .hero-sub', { delay: 300 });
+      sr.reveal('.hero-cta', { delay: 400 });
+      sr.reveal('.glass', { interval: 100 });
+      sr.reveal('section', { delay: 200 });
+      
+      // Nav scroll effect
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          document.querySelector('nav').classList.add('scrolled');
+        } else {
+          document.querySelector('nav').classList.remove('scrolled');
+        }
+      });
+    });
   /**********************************************************************
    * Configuration
    * - APPS_SCRIPT_ENDPOINT: set to your Apps Script web app URL (kept unchanged)
@@ -395,14 +502,24 @@
   // Helper: DOM ready
   function ready(fn){ if(document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
 
-  // Helper: show overlay
+  // Helper: show overlay with enhanced animation
   function showSuccessOverlay(message, title) {
     const overlay = document.getElementById('successOverlay');
     if (!overlay) return;
+    
+    // Update content
     if (title) document.getElementById('successTitle').textContent = title;
     if (message) document.getElementById('successMessage').textContent = message;
+    
+    // Show overlay
     overlay.classList.add('show');
     overlay.setAttribute('aria-hidden','false');
+    
+    // Trigger card animation
+    setTimeout(() => {
+      const card = overlay.querySelector('.overlay-card');
+      if (card) card.style.transform = 'translateY(0)';
+    }, 10);
 
     // auto-close after 3.2s unless redirecting
     setTimeout(()=> {
@@ -544,11 +661,15 @@
     }
   });
 
-  // Load heavy visual libs only for capable desktop browsers (non-blocking)
+  // Load heavy visual libs with better loading states
   (function(){
     const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent) || window.innerWidth < 760;
     const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!isMobile && !prefersReduced) {
+    const vantaContainer = document.getElementById('vantaContainer');
+    
+    if (!isMobile && !prefersReduced && vantaContainer) {
+      // Show loading state immediately
+      vantaContainer.style.opacity = '1';
       const three = document.createElement('script');
       three.src = 'https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js';
       three.async = true;
@@ -559,7 +680,7 @@
         vanta.onload = () => {
           try {
             if (typeof VANTA !== 'undefined' && document.getElementById('vantaContainer')) {
-              VANTA.NET({
+              const vantaEffect = VANTA.NET({
                 el: "#vantaContainer",
                 color: 0x2f9e44,
                 backgroundColor: 0x061124,
@@ -571,6 +692,15 @@
                 touchControls: false,
                 gyroControls: false
               });
+              
+              // Remove fallback once loaded
+              const fallback = document.getElementById('vantaFallback');
+              if (fallback) {
+                setTimeout(() => {
+                  fallback.style.opacity = '0';
+                  setTimeout(() => fallback.remove(), 500);
+                }, 800);
+              }
             }
           } catch (err) { console.warn('Vanta init failed', err); }
         };
@@ -580,6 +710,38 @@
     } else {
       // do nothing (conserve resources on mobile / reduced-motion)
     }
+    // Custom cursor
+    ready(() => {
+      const cursor = document.createElement('div');
+      cursor.classList.add('cursor');
+      document.body.appendChild(cursor);
+      
+      const follower = document.createElement('div');
+      follower.classList.add('cursor-follower');
+      document.body.appendChild(follower);
+      
+      document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+        
+        setTimeout(() => {
+          follower.style.left = e.clientX + 'px';
+          follower.style.top = e.clientY + 'px';
+        }, 100);
+      });
+      
+      // Cursor hover effects
+      document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
+          follower.style.transform = 'translate(-50%, -50%) scale(1.2)';
+        });
+        el.addEventListener('mouseleave', () => {
+          cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+          follower.style.transform = 'translate(-50%, -50%) scale(1)';
+        });
+      });
+    });
   })();
   </script>
 </body>
