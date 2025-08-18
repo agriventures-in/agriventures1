@@ -568,6 +568,112 @@
                   <a href="https://www.linkedin.com/in/prajwalworld/" rel="noopener noreferrer" target="_blank" class="text-gray-600 hover:text-[var(--agri-green)]"><i class="fab fa-linkedin text-xl"></i></a>
                   <a href="https://x.com/agriventures_In" rel="noopener noreferrer" target="_blank" class="text-gray-600 hover:text-[var(--agri-green)]"><i class="fab fa-twitter text-xl"></i></a>
                   <a href="#" class="text-gray-600 hover:text-[var(--agri-green)]"><i class="fab fa-facebook text-xl"></i></a>
+                  <a href="https://www.instagram.com/agriventures.in/" rel="noopener noreferrer" target="_blank" class="text-gray-600 hover:text-[var(--agri-green)]"><i class="fab fa-instagram text-xl"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="md:w-1/2">
+          <form id="contact-form" class="bg-gray-50 p-6 md:p-8 rounded-lg" aria-label="Contact form">
+            <input type="text" name="_gotcha" style="display:none" autocomplete="off" aria-hidden="true" tabindex="-1">
+            
+            <div class="mb-4">
+              <label for="contact-name" class="block text-gray-700 mb-2">Name</label>
+              <input type="text" id="contact-name" name="name" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--agri-green)] focus:border-transparent" placeholder="Your name" required>
+            </div>
+            <div class="mb-4">
+              <label for="contact-email" class="block text-gray-700 mb-2">Email</label>
+              <input type="email" id="contact-email" name="email" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--agri-green)] focus:border-transparent" placeholder="Your email address" required>
+            </div>
+            <div class="mb-4">
+              <label for="contact-subject" class="block text-gray-700 mb-2">Subject</label>
+              <input type="text" id="contact-subject" name="subject" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--agri-green)] focus:border-transparent" placeholder="Subject">
+            </div>
+            <div class="mb-6">
+              <label for="contact-message" class="block text-gray-700 mb-2">Message</label>
+              <textarea id="contact-message" name="message" rows="4" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--agri-green)] focus:border-transparent" placeholder="Your message" required></textarea>
+            </div>
+            <button type="submit" class="w-full bg-[var(--agri-green)] hover:bg-green-700 text-white px-6 py-3 rounded-md font-medium transition">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="md:col-span-2">
+          <div class="flex items-center mb-4">
+            <img src="logo.png" alt="AgriVentures Logo" class="w-8 h-8 mr-2">
+            <span class="text-green-400 font-bold text-xl">AgriVentures</span>
+          </div>
+          <p class="text-gray-400 mb-4">Connecting India's agritech ecosystem - founders, farmers, investors and corporates building the future of agriculture.</p>
+          <div class="flex space-x-4">
+            <a href="https://www.linkedin.com/in/prajwalworld/" rel="noopener noreferrer" target="_blank" class="text-gray-400 hover:text-green-400"><i class="fab fa-linkedin text-xl"></i></a>
+            <a href="https://x.com/agriventures_In" rel="noopener noreferrer" target="_blank" class="text-gray-400 hover:text-green-400"><i class="fab fa-twitter text-xl"></i></a>
+            <a href="https://www.instagram.com/agriventures.in/" rel="noopener noreferrer" target="_blank" class="text-gray-400 hover:text-green-400"><i class="fab fa-instagram text-xl"></i></a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-4">Quick Links</h4>
+          <ul class="space-y-2">
+            <li><a href="#about" class="text-gray-400 hover:text-green-400">About</a></li>
+            <li><a href="#benefits" class="text-gray-400 hover:text-green-400">Benefits</a></li>
+            <li><a href="#team" class="text-gray-400 hover:text-green-400">Team</a></li>
+            <li><a href="#community" class="text-gray-400 hover:text-green-400">Community</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-4">Contact</h4>
+          <ul class="space-y-2">
+            <li class="text-gray-400">Bengaluru, Karnataka</li>
+            <li><a href="mailto:agriventure.in@gmail.com" class="text-gray-400 hover:text-green-400">agriventure.in@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+        <p class="text-gray-400">&copy; 2024 AgriVentures India. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Load AOS for scroll animations -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    // Initialize AOS
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true
+    });
+
+    /**********************
+     * Utility: load external scripts once
+     **********************/
+    const loadedScripts = new Set();
+    function loadScriptOnce(src) {
+      if (loadedScripts.has(src)) return Promise.resolve();
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = () => { loadedScripts.add(src); resolve(); };
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    }
+
+    /**********************
+     * Conditional loading: Vanta + Particles (skip on mobile/reduced-motion)
+     **********************/
+    const isMobile = window.innerWidth <= 768;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;t-[var(--agri-green)]"><i class="fab fa-facebook text-xl"></i></a>
                   <a href="https://www.instagram.com/agriventures.in/" class="text-gray-600 hover:text-[var(--agri-green)]"><i class="fab fa-instagram text-xl"></i></a>
                 </div>
               </div>
@@ -833,8 +939,6 @@
     /**********************
      * Forms: small UX enhancements
      **********************/
- 
-     <script>
 /* ========== AgriVentures forms → Google Apps Script (client) ========== */
 const APPS_SCRIPT_ENDPOINT = "https://script.google.com/macros/s/AKfycbyMKeyO-cKOmjud2kwobtIyIOCU3IN0-EUXlAL2QNewrOWi8Wp-nqjTlBYZzTGpKW5J/exec";
 
@@ -962,9 +1066,38 @@ if (newsletterForm) {
     if (btn) { btn.disabled = false; btn.removeAttribute('aria-busy'); }
   });
 }
-</script>
 
-  
+    /**********************
+     * Smooth scrolling for anchor links
+     **********************/
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+          
+          // Close mobile menu if open
+          const mobileMenu = document.getElementById('mobile-menu');
+          if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+            mobileMenu.classList.add('hidden');
+            mobileMenu.setAttribute('aria-hidden', 'true');
+            const btn = document.getElementById('mobile-menu-button');
+            if (btn) {
+              btn.setAttribute('aria-expanded', 'false');
+              const i = btn.querySelector('i');
+              if (i) {
+                i.classList.remove('fa-times');
+                i.classList.add('fa-bars');
+              }
+            }
+          }
+        }
+      });
+    });
+  </script>
 </body>
-
 </html>
