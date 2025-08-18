@@ -1,757 +1,586 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <!-- Use a standard responsive viewport -->
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>AgriVentures | Future of Agritech</title>
+  <meta name="description" content="AgriVentures India — Product Hunt for Agritech. Join founders, farmers, investors and corporates building the future of agriculture." />
 
-  <!-- SEO / Social -->
-  <meta name="description" content="AgriVentures India — Product Hunt for Agritech: join founders, farmers, investors and corporates building the future of agriculture." />
-  <meta property="og:title" content="AgriVentures India — Future of Agritech" />
-  <meta property="og:description" content="Join India's fastest growing agritech community of innovators, farmers and investors." />
-  <meta property="og:image" content="/favicons/android-chrome-512x512.png" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:site" content="@agriventures_In" />
+  <!-- Preconnect & Google font (fast, reliable) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Favicons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png" />
-  <link rel="icon" type="image/png" sizes="512x512" href="/favicons/android-chrome-512x512.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
-  <link rel="shortcut icon" href="/favicons/favicon.ico" />
-  <link rel="manifest" href="/favicons/site.webmanifest" />
+  <!-- Preload logo to avoid layout shift (very quick) -->
+  <link rel="preload" as="image" href="logo.png">
 
-  <!-- Theme colors -->
-  <meta name="theme-color" content="#2F9E44" />
-  <meta name="msapplication-TileColor" content="#FF7F11" />
+  <!-- Favicon -->
+  <link rel="icon" href="/favicons/favicon.ico">
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-
-  <!-- Tailwind CDN (runtime) -->
-  <script src="https://cdn.tailwindcss.com" defer></script>
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
-
-  <!-- AOS CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-
-  <!-- Page CSS (kept minimal; Tailwind covers layout) -->
+  <!-- Minimal, robust CSS (mobile-first). No external CSS dependencies. -->
   <style>
     :root{
-      --agri-green:#2F9E44;
-      --saffron:#FF7F11;
-      --glass-alpha: 0.06;
+      --accent-green: #2F9E44;
+      --accent-saffron: #FF7F11;
+      --bg-top: #061124;
+      --bg-bottom: #07102a;
+      --glass-bg: rgba(255,255,255,0.06);
       --glass-border: rgba(255,255,255,0.08);
-      --card-shadow: 0 18px 40px rgba(2,6,23,0.25);
-      --glass-radius: 12px;
       --glass-blur: 10px;
-      --nav-height: 68px;
+      --text-on-dark: #E6F8EE;
+      --muted-light: rgba(230,248,238,0.7);
+      --muted-dark: #6b7280;
+      --max-width: 1100px;
+      --nav-height: 66px;
+      --radius: 12px;
+      --success-green: #2bd37b;
     }
 
-    html,body{height:100%}
-    body {
-      font-family: 'Space Grotesk', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-      margin:0;
-      color:#0b1220;
-      background: linear-gradient(180deg,#071029 0%, #0b1120 60%);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      scroll-behavior:smooth;
+    html,body{height:100%;margin:0;font-family:"Space Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:linear-gradient(180deg,var(--bg-top),var(--bg-bottom) 60%);color:var(--text-on-dark);-webkit-font-smoothing:antialiased}
+    .container{max-width:var(--max-width);margin:0 auto;padding:0 16px;box-sizing:border-box}
+
+    /* NAV */
+    nav{position:sticky;top:0;z-index:100;background:linear-gradient(180deg, rgba(1,4,10,0.45), rgba(2,6,23,0.3));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.03)}
+    .nav-inner{height:var(--nav-height);display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .logo{display:flex;align-items:center;gap:10px}
+    .logo img{width:44px;height:44px;border-radius:10px;display:block}
+    .logo-title{font-weight:700;color:var(--accent-green);line-height:1}
+    .nav-links{display:none;gap:18px}
+    .nav-links a{color:var(--muted-light);text-decoration:none}
+    .cta-primary{display:none}
+
+    /* mobile menu */
+    .mobile-button{background:rgba(255,255,255,0.06);border:0;padding:8px;border-radius:8px;color:var(--text-on-dark)}
+    .mobile-menu{display:none;padding:10px 16px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-top:1px solid rgba(255,255,255,0.03)}
+
+    /* HERO */
+    header.hero{min-height:60vh;display:flex;align-items:center;justify-content:center;padding:48px 0;position:relative;overflow:hidden}
+    .hero-inner{max-width:980px;text-align:center;padding:0 16px}
+    .hero-title{font-size:2rem;line-height:1.03;margin:0 0 12px;color:var(--text-on-dark);font-weight:800}
+    .hero-sub{color:rgba(230,248,238,0.93);font-size:1rem;margin:0 0 18px}
+    .hero-cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+
+    /* glass panels and cards */
+    .glass{background:var(--glass-bg);border:1px solid var(--glass-border);backdrop-filter: blur(var(--glass-blur));-webkit-backdrop-filter: blur(var(--glass-blur));border-radius:var(--radius);box-shadow:0 18px 40px rgba(2,6,23,0.28);}
+
+    /* forms */
+    form{margin-top:12px}
+    label{display:block;font-size:0.95rem;margin-bottom:6px;color:var(--muted-light)}
+    input,select,textarea{width:100%;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.03);color:var(--text-on-dark);font-size:1rem;box-sizing:border-box}
+    input::placeholder,textarea::placeholder{color:rgba(230,248,238,0.52)}
+    input:focus,select:focus,textarea:focus{outline:2px solid rgba(47,158,68,0.12);box-shadow:0 8px 28px rgba(47,158,68,0.06);border-color:var(--accent-green)}
+
+    .btn { display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:700 }
+    .btn-primary{background:linear-gradient(90deg,var(--accent-green),var(--accent-green));color:#fff}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent-green)}
+
+    .feedback{margin-top:10px;font-size:0.95rem;color:var(--muted-light)}
+
+    /* overlay success */
+    .overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.5), rgba(0,0,0,0.6));opacity:0;pointer-events:none;transform:scale(.98);transition:all .26s ease;z-index:210}
+    .overlay.show{opacity:1;pointer-events:auto;transform:scale(1)}
+    .overlay-card{width:340px;background:var(--glass-bg);border:1px solid var(--glass-border);backdrop-filter:blur(8px);padding:20px;border-radius:14px;text-align:center}
+    .checkmark{width:78px;height:78px;margin:0 auto;display:block}
+    .checkmark path{stroke:var(--success-green);stroke-width:6;stroke-linecap:round;stroke-linejoin:round;fill:none;stroke-dasharray:140;stroke-dashoffset:140;transition:stroke-dashoffset .55s ease .12s}
+    .overlay.show .checkmark path{stroke-dashoffset:0}
+
+    /* confetti */
+    .confetti{margin-top:12px;height:34px;position:relative;overflow:visible}
+    .confetti .c{position:absolute;width:8px;height:14px;border-radius:2px;opacity:0;transform:translateY(0);animation:confetti-pop .9s ease forwards}
+    .confetti .c:nth-child(1){left:6%;background:#ffd43b;animation-delay:.04s}
+    .confetti .c:nth-child(2){left:26%;background:#ff7f11;animation-delay:.08s}
+    .confetti .c:nth-child(3){left:48%;background:#2F9E44;animation-delay:.12s}
+    .confetti .c:nth-child(4){left:68%;background:#00b4ff;animation-delay:.16s}
+    .confetti .c:nth-child(5){left:88%;background:#d6336c;animation-delay:.2s}
+    @keyframes confetti-pop{0%{transform:translateY(0) rotate(0);opacity:0}10%{opacity:1}100%{transform:translateY(-120px) rotate(520deg);opacity:1}}
+
+    /* responsive */
+    @media(min-width:768px){
+      .nav-links{display:flex}
+      .cta-primary{display:inline-block}
+      .mobile-button{display:none}
+      .mobile-menu{display:none}
+      .hero-title{font-size:3.2rem}
+      .hero-sub{font-size:1.25rem}
+    }
+    @media(max-width:767px){
+      .hero-title{font-size:1.9rem}
     }
 
-    /* ensure sections sit below sticky nav when scrolled to */
-    section { scroll-margin-top: calc(var(--nav-height) + 8px); }
-
-    .glass-card {
-      background: rgba(255,255,255,var(--glass-alpha));
-      backdrop-filter: blur(var(--glass-blur));
-      -webkit-backdrop-filter: blur(var(--glass-blur));
-      border-radius: var(--glass-radius);
-      border: 1px solid var(--glass-border);
-      box-shadow: var(--card-shadow);
-    }
-
-    .icon-3d {
-      display:inline-flex; align-items:center; justify-content:center;
-      width:56px; height:56px; border-radius:12px;
-      background: linear-gradient(180deg,#fff,#f4f4f4);
-      box-shadow: 0 8px 20px rgba(2,6,23,0.08), inset 0 1px 0 rgba(255,255,255,0.5);
-    }
-
-    /* Bento grid responsive fallback */
-    .bento-grid {
-      display:grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap:1rem;
-    }
-    .bento-item { padding:1rem; background:#fff; border-radius:10px; box-shadow:0 8px 24px rgba(2,6,23,0.05); }
-    .bento-item.large { grid-column: span 2; }
-    .bento-item.xlarge{ grid-column: span 3; }
-
-    @media (max-width: 1024px) {
-      .bento-grid { grid-template-columns: repeat(4,1fr); }
-      .bento-item.large { grid-column: span 2; }
-      .bento-item.xlarge{ grid-column: span 4; }
-    }
-    @media (max-width: 640px) {
-      .bento-grid { grid-template-columns: repeat(2,1fr); }
-      .bento-item.large, .bento-item.xlarge { grid-column: span 2; }
-    }
-
-    /* cursor hidden by default on mobile and for users preferring reduced motion */
-    @media (prefers-reduced-motion: reduce), (max-width: 640px) {
-      .cursor, .cursor-follower { display:none !important; }
-    }
-
-    /* small helpers */
-    .hero-title { color: #E6F8EE; }
-    .hero-sub { color: rgba(230,248,238,0.9); }
-
-    /* make mobile menu full width */
-    #mobile-menu { z-index: 60; }
+    /* accessibility */
+    button:focus, a:focus, input:focus, select:focus, textarea:focus{outline-offset:3px}
   </style>
 </head>
 
-<body class="text-white">
-
-  <!-- custom cursors (hidden on mobile / reduced-motion) -->
-  <div class="cursor fixed w-1.5 h-1.5 rounded-full bg-white/90 pointer-events-none" style="transform:translate(-50%,-50%); left:-1000px; top:-1000px;" aria-hidden="true"></div>
-  <div class="cursor-follower fixed w-4.5 h-4.5 rounded-full border border-white/25 pointer-events-none" style="transform:translate(-50%,-50%); left:-1000px; top:-1000px;" aria-hidden="true"></div>
-
-  <!-- NAV -->
-  <nav class="backdrop-blur bg-white/5 border-b border-white/6 sticky top-0 z-50" style="height:var(--nav-height);">
-    <div class="container mx-auto px-4 h-full flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <img src="logo.png" alt="AgriVentures logo" class="w-10 h-10 rounded" />
-        <span class="text-[var(--agri-green)] font-semibold text-lg">AgriVentures</span>
+<body>
+  <!-- MAIN NAV -->
+  <nav aria-label="Main navigation">
+    <div class="container nav-inner">
+      <div class="logo">
+        <img src="logo.png" alt="AgriVentures logo">
+        <div>
+          <div class="logo-title">AgriVentures</div>
+          <div style="font-size:12px;color:var(--muted-light)">Future of Agritech</div>
+        </div>
       </div>
 
-      <div class="hidden md:flex items-center gap-8">
-        <a href="#about" class="text-gray-200 hover:text-[var(--agri-green)]">About</a>
-        <a href="#benefits" class="text-gray-200 hover:text-[var(--agri-green)]">Benefits</a>
-        <a href="#team" class="text-gray-200 hover:text-[var(--agri-green)]">Team</a>
-        <a href="#community" class="text-gray-200 hover:text-[var(--agri-green)]">Community</a>
-        <a href="#contact" class="text-gray-200 hover:text-[var(--agri-green)]">Contact</a>
+      <div class="nav-links" role="menubar" aria-hidden="false">
+        <a href="#about" role="menuitem">About</a>
+        <a href="#benefits" role="menuitem">Benefits</a>
+        <a href="#team" role="menuitem">Team</a>
+        <a href="#community" role="menuitem">Community</a>
+        <a href="#contact" role="menuitem">Contact</a>
       </div>
 
-      <div class="flex items-center gap-3">
-        <a href="#startup-form" class="hidden md:inline-block bg-gradient-to-br from-[var(--agri-green)] to-[var(--saffron)] text-white px-4 py-2 rounded-md text-sm font-medium">Submit Your Startup</a>
-
-        <button id="mobile-menu-button" class="md:hidden p-2 text-gray-200" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle menu">
-          <i class="fas fa-bars text-xl"></i>
+      <div style="display:flex;align-items:center;gap:10px">
+        <a class="cta-primary" href="#startup-form" style="text-decoration:none;padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,var(--accent-green),var(--accent-saffron));color:#fff;font-weight:700">Submit Your Startup</a>
+        <button class="mobile-button" id="mobileToggle" aria-expanded="false" aria-controls="mobileMenu" title="Open menu" aria-label="Open menu">
+          <!-- hamburger icon -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
     </div>
 
-    <!-- mobile menu -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white/5 border-t backdrop-blur-md">
-      <div class="px-4 py-4 space-y-3">
-        <a href="#about" class="block text-gray-200">About</a>
-        <a href="#benefits" class="block text-gray-200">Benefits</a>
-        <a href="#team" class="block text-gray-200">Team</a>
-        <a href="#community" class="block text-gray-200">Community</a>
-        <a href="#contact" class="block text-gray-200">Contact</a>
-        <a href="#startup-form" class="block mt-2 bg-gradient-to-br from-[var(--agri-green)] to-[var(--saffron)] text-white px-4 py-2 rounded-md text-center">Submit Your Startup</a>
-      </div>
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+      <a href="#about">About</a>
+      <a href="#benefits">Benefits</a>
+      <a href="#team">Team</a>
+      <a href="#community">Community</a>
+      <a href="#contact">Contact</a>
+      <div style="margin-top:8px"><a href="#startup-form" style="display:block;background:linear-gradient(90deg,var(--accent-green),var(--accent-saffron));color:#fff;padding:10px;border-radius:10px;text-align:center">Submit Your Startup</a></div>
     </div>
   </nav>
 
   <!-- HERO -->
-  <header class="relative overflow-hidden" id="hero" style="min-height:60vh;">
-    <!-- vanta / particles canvases are injected in this container -->
-    <div id="vanta-canvas" class="absolute inset-0 -z-10" aria-hidden="true"></div>
-    <div id="particles-js" class="absolute inset-0 -z-10 opacity-30" aria-hidden="true"></div>
+  <header class="hero" role="banner" aria-label="Hero">
+    <div id="vantaContainer" aria-hidden="true" style="position:absolute;inset:0;z:-2"></div>
 
-    <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/25 to-transparent -z-5"></div>
+    <div class="hero-inner container">
+      <h1 class="hero-title">Connecting India's Agritech Ecosystem</h1>
+      <p class="hero-sub">Join India's fastest growing community of agritech innovators, farmers, investors and corporates. Be part of the revolution transforming agriculture with technology.</p>
 
-    <div class="relative z-10 container mx-auto px-4 py-24">
-      <div class="max-w-3xl mx-auto text-center">
-        <h1 class="hero-title text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">Connecting India's Agritech Ecosystem</h1>
-        <p class="hero-sub text-lg sm:text-xl md:text-2xl mb-8">Join India's fastest growing community of agritech innovators, farmers, investors and corporates. Be part of the revolution transforming agriculture with technology.</p>
+      <div class="hero-cta" role="group" aria-label="Primary actions">
+        <button class="btn btn-primary" onclick="document.querySelector('#community').scrollIntoView({behavior:'smooth'})">Join Our Community</button>
+        <a href="#startup-form" class="btn btn-ghost" style="display:inline-flex;align-items:center;gap:8px;color:var(--accent-green)">Submit Your Startup</a>
+      </div>
 
-        <div class="flex flex-col sm:flex-row gap-3 justify-center">
-          <a href="#community" class="inline-block bg-gradient-to-br from-[var(--agri-green)] to-[var(--saffron)] text-white px-6 py-3 rounded-md font-medium text-lg text-center">Join Our Community</a>
-          <a href="#startup-form" class="inline-block bg-white text-[var(--agri-green)] px-6 py-3 rounded-md font-medium text-lg text-center">Submit Your Startup</a>
+      <div style="margin-top:18px;display:inline-flex;align-items:center;gap:12px" aria-hidden="true">
+        <div style="display:flex;gap:-12px">
+          <img src="https://randomuser.me/api/portraits/women/12.jpg" alt="" style="width:44px;height:44px;border-radius:999px;border:2px solid rgba(255,255,255,0.06)">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="" style="width:44px;height:44px;border-radius:999px;border:2px solid rgba(255,255,255,0.06);margin-left:-14px">
+          <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="" style="width:44px;height:44px;border-radius:999px;border:2px solid rgba(255,255,255,0.06);margin-left:-14px">
         </div>
-
-        <div class="mt-8 flex justify-center">
-          <div class="bg-white/10 backdrop-blur rounded-full p-3 inline-flex items-center glass-card">
-            <div class="flex -space-x-2">
-              <img class="w-10 h-10 rounded-full border-2 border-white" loading="lazy" src="https://randomuser.me/api/portraits/women/12.jpg" alt="Member avatar">
-              <img class="w-10 h-10 rounded-full border-2 border-white" loading="lazy" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Member avatar">
-              <img class="w-10 h-10 rounded-full border-2 border-white" loading="lazy" src="https://randomuser.me/api/portraits/women/45.jpg" alt="Member avatar">
-            </div>
-            <span class="ml-3 text-sm">Join 1,200+ members</span>
-          </div>
-        </div>
+        <div style="color:var(--muted-light)">Join 1,200+ members</div>
       </div>
     </div>
   </header>
 
-  <!-- STATS -->
-  <section class="py-10 bg-gradient-to-b from-transparent to-white/2">
-    <div class="container mx-auto px-4">
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
-        <div class="bg-white p-6 rounded-xl shadow-sm">
-          <div class="text-[var(--agri-green)] text-3xl font-bold mb-2">6,000+</div>
-          <div class="text-gray-700">Agritech Startups</div>
-        </div>
-        <div class="bg-white p-6 rounded-xl shadow-sm">
-          <div class="text-[var(--agri-green)] text-3xl font-bold mb-2">$3.4B</div>
-          <div class="text-gray-700">Funding in 2023</div>
-        </div>
-        <div class="bg-white p-6 rounded-xl shadow-sm">
-          <div class="text-[var(--agri-green)] text-3xl font-bold mb-2">120M+</div>
-          <div class="text-gray-700">Farmers Impacted</div>
-        </div>
-        <div class="bg-white p-6 rounded-xl shadow-sm">
-          <div class="text-[var(--agri-green)] text-3xl font-bold mb-2">1,200+</div>
-          <div class="text-gray-700">Community Members</div>
-        </div>
+  <!-- quick stats -->
+  <section class="container" aria-label="Stats" style="padding:18px 16px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px">
+      <div class="glass" style="padding:14px;text-align:center">
+        <div style="font-weight:800;font-size:18px;color:var(--accent-green)">6,000+</div>
+        <div style="color:var(--muted-dark)">Agritech Startups</div>
+      </div>
+      <div class="glass" style="padding:14px;text-align:center">
+        <div style="font-weight:800;font-size:18px;color:var(--accent-green)">$3.4B</div>
+        <div style="color:var(--muted-dark)">Funding in 2023</div>
+      </div>
+      <div class="glass" style="padding:14px;text-align:center">
+        <div style="font-weight:800;font-size:18px;color:var(--accent-green)">120M+</div>
+        <div style="color:var(--muted-dark)">Farmers Impacted</div>
+      </div>
+      <div class="glass" style="padding:14px;text-align:center">
+        <div style="font-weight:800;font-size:18px;color:var(--accent-green)">1,200+</div>
+        <div style="color:var(--muted-dark)">Community Members</div>
       </div>
     </div>
   </section>
 
   <!-- ABOUT -->
-  <section id="about" class="py-16 bg-white text-gray-800">
-    <div class="container mx-auto px-4">
-      <div class="flex flex-col lg:flex-row items-center gap-8">
-        <div class="lg:w-1/2">
-          <h2 class="text-3xl font-bold mb-4">About AgriVentures India</h2>
-          <p class="mb-4">AgriVentures India is the first dedicated platform connecting all stakeholders in India's booming agritech ecosystem. We're building the "Product Hunt for Agritech" — a community-driven platform to discover, support and grow innovative agricultural technology solutions.</p>
-          <p class="mb-4">With over 6,000 active agritech startups in India and growing investor interest, there's never been a better time to bring together founders, farmers, investors and corporates to collaborate and accelerate innovation in this critical sector.</p>
-
-          <div class="bg-green-50 border-l-4 border-[var(--agri-green)] p-4 mt-4 rounded">
-            <p class="text-gray-700 italic">"India's agritech sector is projected to reach $24 billion by 2025. AgriVentures is creating the platform to connect and grow this ecosystem."</p>
-          </div>
-        </div>
-
-        <div class="lg:w-1/2">
-          <img src="shirt.png" alt="Farmers using technology" loading="lazy" class="w-full rounded-lg shadow-lg" />
-        </div>
+  <section id="about" class="glass" style="margin:22px auto;padding:28px;max-width:var(--max-width);border-radius:14px">
+    <div class="container" style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+      <div style="flex:1;min-width:260px">
+        <h2 style="margin-top:0;color:var(--text-on-dark)">About AgriVentures India</h2>
+        <p style="color:var(--muted-dark)">AgriVentures India is the first dedicated platform connecting all stakeholders in India's agritech ecosystem. We're building the "Product Hunt for Agritech" — a community-driven platform to discover, support and grow innovative agricultural technology solutions.</p>
+      </div>
+      <div style="flex:1;min-width:200px">
+        <img src="shirt.png" alt="Farmers using technology" style="width:100%;border-radius:10px;display:block" loading="lazy">
       </div>
     </div>
   </section>
 
-  <!-- BENEFITS bento -->
-  <section id="benefits" class="py-16 bg-gray-50 text-gray-800">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-8">
-        <h2 class="text-3xl font-bold mb-2">Why Join AgriVentures?</h2>
-        <p class="text-gray-600 max-w-2xl mx-auto">Discover the benefits of being part of India's premier agritech community</p>
+  <!-- BENEFITS (simple cards replacing bento) -->
+  <section id="benefits" class="container" style="padding-top:10px;padding-bottom:30px">
+    <h3 style="color:var(--text-on-dark)">Why Join AgriVentures?</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px">
+      <div class="glass" style="padding:14px">
+        <h4 style="margin:0 0 8px">Networking</h4>
+        <p style="margin:0;color:var(--muted-dark)">Connect with agritech founders, investors, farmers and industry leaders through events and our platform.</p>
       </div>
-
-      <div class="bento-grid">
-        <div class="bento-item large glass-card">
-          <div class="flex gap-4 items-start">
-            <div class="icon-3d"><i class="fas fa-network-wired text-[var(--agri-green)]"></i></div>
-            <div>
-              <h3 class="font-semibold">Networking</h3>
-              <p class="text-sm text-gray-600">Connect with agritech founders, investors, farmers and industry leaders through our exclusive events and online platform.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="bento-item">
-          <div class="flex gap-4 items-start">
-            <div class="icon-3d"><i class="fas fa-bullhorn text-[var(--agri-green)]"></i></div>
-            <div>
-              <h3 class="font-semibold">Startup Visibility</h3>
-              <p class="text-sm text-gray-600">Showcase your agritech startup to potential customers, partners and investors through our featured listings.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="bento-item large">
-          <div class="flex gap-4 items-start">
-            <div class="icon-3d"><i class="fas fa-chart-line text-[var(--agri-green)]"></i></div>
-            <div>
-              <h3 class="font-semibold">Market Insights</h3>
-              <p class="text-sm text-gray-600">Get access to exclusive reports, trends and data about India's rapidly evolving agritech landscape.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="bento-item">
-          <div class="flex gap-4 items-start">
-            <div class="icon-3d"><i class="fas fa-handshake text-[var(--agri-green)]"></i></div>
-            <div>
-              <h3 class="font-semibold">Partnerships</h3>
-              <p class="text-sm text-gray-600">Discover collaboration opportunities with corporates, research institutions and government initiatives.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="bento-item">
-          <div class="flex gap-4 items-start">
-            <div class="icon-3d"><i class="fas fa-graduation-cap text-[var(--agri-green)]"></i></div>
-            <div>
-              <h3 class="font-semibold">Learning Resources</h3>
-              <p class="text-sm text-gray-600">Access webinars, workshops and guides on everything from farm tech to fundraising in agritech.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="bento-item xlarge">
-          <div class="flex gap-4 items-start">
-            <div class="icon-3d"><i class="fas fa-trophy text-[var(--agri-green)]"></i></div>
-            <div>
-              <h3 class="font-semibold">Recognition</h3>
-              <p class="text-sm text-gray-600">Get featured in our "Agritech Startup of the Week" and annual awards recognizing innovation in the sector.</p>
-            </div>
-          </div>
-        </div>
+      <div class="glass" style="padding:14px">
+        <h4 style="margin:0 0 8px">Startup Visibility</h4>
+        <p style="margin:0;color:var(--muted-dark)">Showcase your agritech startup to potential customers, partners and investors.</p>
+      </div>
+      <div class="glass" style="padding:14px">
+        <h4 style="margin:0 0 8px">Market Insights</h4>
+        <p style="margin:0;color:var(--muted-dark)">Get exclusive reports, trends and data about India's agritech landscape.</p>
       </div>
     </div>
   </section>
 
   <!-- TEAM -->
-  <section id="team" class="py-16 bg-white text-gray-800">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-8">
-        <h2 class="text-3xl font-bold">Meet Our Team</h2>
-        <p class="text-gray-600 max-w-2xl mx-auto">Passionate leaders driving India's agritech revolution</p>
+  <section id="team" class="glass" style="margin:22px auto;padding:18px;border-radius:12px;max-width:var(--max-width)">
+    <h3 style="margin-top:0">Meet Our Team</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+      <div style="text-align:center;padding:12px">
+        <img src="prajwal.png" alt="Prajwal" style="width:110px;height:110px;border-radius:999px;display:block;margin:0 auto 10px">
+        <strong>Prajwal Bedavatti</strong><div style="color:var(--muted-dark)">Founder & CEO</div>
       </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="bg-gray-50 p-6 rounded-lg text-center">
-          <img src="prajwal.png" alt="Prajwal Bedavatti" loading="lazy" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-green-100" />
-          <h3 class="text-xl font-semibold">Prajwal Bedavatti</h3>
-          <p class="text-[var(--agri-green)] mb-2">Founder & CEO</p>
-          <p class="text-gray-600">Former agri-tech entrepreneur with 5+ years experience building solutions for smallholder farmers.</p>
-        </div>
-
-        <div class="bg-gray-50 p-6 rounded-lg text-center">
-          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Team member" loading="lazy" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-green-100" />
-          <h3 class="text-xl font-semibold">To be hired</h3>
-          <p class="text-[var(--agri-green)] mb-2">Co-Founder & CTO</p>
-          <p class="text-gray-600">Introduction.</p>
-        </div>
-
-        <div class="bg-gray-50 p-6 rounded-lg text-center">
-          <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Team member" loading="lazy" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-green-100" />
-          <h3 class="text-xl font-semibold">To be hired</h3>
-          <p class="text-[var(--agri-green)] mb-2">Head of Community</p>
-          <p class="text-gray-600">Introduction.</p>
-        </div>
+      <div style="text-align:center;padding:12px">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Member" style="width:110px;height:110px;border-radius:999px;display:block;margin:0 auto 10px">
+        <strong>To be hired</strong><div style="color:var(--muted-dark)">Co-Founder & CTO</div>
+      </div>
+      <div style="text-align:center;padding:12px">
+        <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Member" style="width:110px;height:110px;border-radius:999px;display:block;margin:0 auto 10px">
+        <strong>To be hired</strong><div style="color:var(--muted-dark)">Head of Community</div>
       </div>
     </div>
   </section>
 
-  <!-- COMMUNITY (forms) -->
-  <section id="community" class="py-16 bg-[var(--agri-green)] text-white">
-    <div class="container mx-auto px-4">
-      <div class="flex flex-col lg:flex-row gap-8 items-center">
-        <div class="lg:w-1/2">
-          <h2 class="text-3xl font-bold mb-4">Join Our Growing Community</h2>
-          <p class="mb-4">Be part of India's most vibrant agritech network. Get access to exclusive content, networking opportunities, and early invites to our platform launch.</p>
+  <!-- COMMUNITY FORM -->
+  <section id="community" style="padding:18px 0">
+    <div class="container" style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start">
+      <div style="flex:1;min-width:300px">
+        <h3 style="margin-top:0">Join Our Growing Community</h3>
+        <p style="color:var(--muted-light)">Be part of India's most vibrant agritech network. Get access to exclusive content, networking opportunities, and early invites to our platform launch.</p>
 
-          <form id="community-form" class="space-y-4" aria-label="Join community form" novalidate>
-            <!-- unique honeypot per form -->
-            <input type="text" name="_gotcha" id="_gotcha_community" style="display:none" autocomplete="off" aria-hidden="true" tabindex="-1">
+        <form id="form-community" class="glass" style="padding:14px;border-radius:12px" novalidate>
+          <input type="text" name="_gotcha" id="gotcha-community" style="display:none" autocomplete="off" aria-hidden="true">
 
-            <div>
-              <label for="name" class="block mb-1">Name</label>
-              <input id="name" name="name" required class="w-full px-4 py-2 rounded-md bg-green-700/30 border border-green-500 placeholder-green-200" placeholder="Your name" />
-            </div>
+          <label for="community-name">Name</label>
+          <input id="community-name" name="name" type="text" placeholder="Your name" required>
 
-            <div>
-              <label for="email" class="block mb-1">Email</label>
-              <input id="email" name="email" type="email" required class="w-full px-4 py-2 rounded-md bg-green-700/30 border border-green-500 placeholder-green-200" placeholder="Your email address" />
-            </div>
+          <label for="community-email">Email</label>
+          <input id="community-email" name="email" type="email" placeholder="email@domain.com" required>
 
-            <div>
-              <label for="role" class="block mb-1">I'm a</label>
-              <select id="role" name="role" required class="w-full px-4 py-2 rounded-md bg-green-700/30 border border-green-500">
-                <option value="" disabled selected>Select your role</option>
-                <option value="founder">Agritech Founder</option>
-                <option value="farmer">Farmer/Farmer Group</option>
-                <option value="investor">Investor</option>
-                <option value="corporate">Corporate</option>
-                <option value="researcher">Researcher</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
+          <label for="community-role">I'm a</label>
+          <select id="community-role" name="role" required>
+            <option value="" disabled selected>Select your role</option>
+            <option>AgriTech Founder</option>
+            <option>Farmer / Farmer Group</option>
+            <option>Investor</option>
+            <option>Corporate</option>
+          </select>
 
-            <button type="submit" class="w-full bg-white text-[var(--agri-green)] px-6 py-3 rounded-md font-medium">Join Now</button>
-
-            <p class="text-sm opacity-80">We respect your privacy. No spam, ever.</p>
-            <div id="community-feedback" role="status" aria-live="polite" class="text-sm mt-2"></div>
-          </form>
-        </div>
-
-        <div class="lg:w-1/2">
-          <div class="bg-white/10 p-6 rounded-lg glass-card">
-            <h3 class="text-xl font-semibold mb-4">What members say</h3>
-            <div class="space-y-4">
-              <div class="flex items-start gap-4">
-                <img src="mallikarjun.png" alt="Mallikarjun Chougala" loading="lazy" class="w-12 h-12 rounded-full" />
-                <div>
-                  <p class="font-medium">Mallikarjun Chougala</p>
-                  <p class="text-sm opacity-80 mb-1">Founder, En-Cure Farms</p>
-                  <p class="italic">"Through AgriVentures, we connected with three investors who were perfect fits for our Series A."</p>
-                </div>
-              </div>
-
-              <div class="flex items-start gap-4">
-                <img src="Dr. Prabhu. C. Ganiger" alt="Prabhu" loading="lazy" class="w-12 h-12 rounded-full" />
-                <div>
-                  <p class="font-medium">Prabhu</p>
-                  <p class="text-sm opacity-80 mb-1">Founder & CEO, Diptera Hub</p>
-                  <p class="italic">"As a founder, DipteraHub gives me curated access to the most promising agritech startups in India."</p>
-                </div>
-              </div>
-            </div>
+          <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+            <button type="submit" class="btn btn-primary">Join Now</button>
+            <button type="reset" class="btn btn-ghost">Reset</button>
           </div>
+
+          <div id="community-feedback" class="feedback" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+
+      <div style="flex:1;min-width:250px">
+        <div class="glass" style="padding:14px">
+          <h4 style="margin:0 0 8px">What members say</h4>
+          <p style="color:var(--muted-dark);margin:0">"Through AgriVentures, we connected with three investors who were perfect fits for our Series A."</p>
+          <div style="margin-top:10px;color:var(--muted-dark)">— Mallikarjun Chougala, En-Cure Farms</div>
         </div>
-      </div>    
+      </div>
     </div>
   </section>
 
   <!-- STARTUP CTA -->
-  <section id="startup-form" class="py-16 bg-white">
-    <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-4">Submit Your Agritech Startup</h2>
-        <p class="text-gray-600 mb-8">Get your startup featured on AgriVentures India and connect with potential customers, partners and investors.</p>
+  <section id="startup-form" style="padding:18px 0">
+    <div class="container text-center">
+      <h3 style="margin-top:0">Submit Your Agritech Startup</h3>
+      <p style="color:var(--muted-dark)">Get your startup featured on AgriVentures India and connect with potential customers, partners and investors.</p>
+      <a href="https://forms.google.com/startup-form" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="display:inline-block;margin-top:10px">Apply Now (Google Form)</a>
+    </div>
+  </section>
 
-        <div class="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-8">
-          <i class="fas fa-rocket text-5xl text-[var(--agri-green)] mb-4"></i>
-          <h3 class="text-2xl font-semibold mb-2">Ready to showcase your startup?</h3>
-          <a href="https://forms.google.com/startup-form" target="_blank" rel="noopener noreferrer" class="inline-block bg-gradient-to-br from-[var(--agri-green)] to-[var(--saffron)] text-white px-8 py-3 rounded-md">Apply Now (Google Form)</a>
-        </div>
+  <!-- CONTACT FORM -->
+  <section id="contact" style="padding:18px 0">
+    <div class="container" style="display:flex;gap:18px;flex-wrap:wrap">
+      <div style="flex:1;min-width:260px">
+        <h3 style="margin-top:0">Get In Touch</h3>
+        <p style="color:var(--muted-dark)">Have questions or want to learn more? Reach out to our team.</p>
+        <div style="margin-top:10px;color:var(--muted-dark)"><strong>Email:</strong> <a href="mailto:agriventure.in@gmail.com" style="color:var(--accent-green)">agriventure.in@gmail.com</a></div>
+      </div>
+
+      <div style="flex:1;min-width:320px">
+        <form id="form-contact" class="glass" style="padding:14px;border-radius:12px" novalidate>
+          <input type="text" name="_gotcha" id="gotcha-contact" style="display:none" autocomplete="off" aria-hidden="true">
+          <label for="contact-name">Name</label>
+          <input id="contact-name" name="name" type="text" placeholder="Your name" required>
+
+          <label for="contact-email">Email</label>
+          <input id="contact-email" name="email" type="email" placeholder="email@domain.com" required>
+
+          <label for="contact-subject">Subject</label>
+          <input id="contact-subject" name="subject" type="text" placeholder="Subject (optional)">
+
+          <label for="contact-message">Message</label>
+          <textarea id="contact-message" name="message" rows="5" placeholder="Your message" required></textarea>
+
+          <div style="margin-top:12px;display:flex;gap:10px">
+            <button type="submit" class="btn btn-primary">Send Message</button>
+            <button type="reset" class="btn btn-ghost">Reset</button>
+          </div>
+          <div class="feedback contact-feedback" role="status" aria-live="polite"></div>
+        </form>
       </div>
     </div>
   </section>
 
-  <!-- PARTNERS -->
-  <section class="py-12 bg-gray-50">
-    <div class="container mx-auto px-4 text-center">
-      <h3 class="text-xl font-semibold mb-4">Supported By</h3>
-      <div class="flex flex-wrap justify-center items-center gap-8 mt-6">
-        <div class="w-32 h-16 bg-white p-2 flex items-center justify-center rounded-md shadow-sm">NASSCOM</div>
-        <div class="w-32 h-16 bg-white p-2 flex items-center justify-center rounded-md shadow-sm">a2i</div>
-        <div class="w-32 h-16 bg-white p-2 flex items-center justify-center rounded-md shadow-sm">IIT Delhi</div>
-        <div class="w-32 h-16 bg-white p-2 flex items-center justify-center rounded-md shadow-sm">ICAR</div>
+  <!-- NEWSLETTER & FOOTER -->
+  <footer style="padding:20px 0;background:linear-gradient(180deg,#07102a,#061124);color:var(--muted-light)">
+    <div class="container" style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;justify-content:space-between">
+      <div style="min-width:220px">
+        <img src="logo.png" alt="AgriVentures" style="width:44px;height:44px;border-radius:10px;display:inline-block;vertical-align:middle">
+        <div style="display:inline-block;margin-left:10px;vertical-align:middle">
+          <div style="color:var(--accent-green);font-weight:700">AgriVentures</div>
+          <div style="font-size:12px;color:var(--muted-light)">Future of Agritech</div>
+        </div>
+        <p style="margin-top:10px;color:var(--muted-light);max-width:300px">Connecting India's agritech ecosystem to drive innovation and growth in agriculture.</p>
+      </div>
+
+      <div style="min-width:260px">
+        <h4 style="margin:0 0 8px">Newsletter</h4>
+        <form id="form-newsletter" style="display:flex;gap:8px;align-items:center" novalidate>
+          <input type="text" name="_gotcha" id="gotcha-newsletter" style="display:none" autocomplete="off" aria-hidden="true">
+          <input name="email" type="email" placeholder="Your email" required style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--text-on-dark);min-width:180px">
+          <button type="submit" class="btn btn-primary" aria-label="Subscribe">Subscribe</button>
+        </form>
+        <div class="feedback newsletter-feedback" role="status" aria-live="polite"></div>
       </div>
     </div>
-  </section>
 
-  <!-- CONTACT -->
-  <section id="contact" class="py-16 bg-white">
-    <div class="container mx-auto px-4">
-      <div class="flex flex-col lg:flex-row gap-8">
-        <div class="lg:w-1/2">
-          <h2 class="text-3xl font-bold mb-3">Get In Touch</h2>
-          <p class="text-gray-600 mb-6">Have questions or want to learn more about AgriVentures India? Reach out to our team.</p>
-
-          <div class="space-y-4">
-            <div class="flex items-start gap-4">
-              <div class="bg-green-100 p-3 rounded-full"><i class="fas fa-envelope text-[var(--agri-green)]"></i></div>
-              <div>
-                <div class="font-medium">Email Us</div>
-                <a href="mailto:agriventure.in@gmail.com" class="text-[var(--agri-green)]">agriventure.in@gmail.com</a>
-              </div>
-            </div>
-
-            <div class="flex items-start gap-4">
-              <div class="bg-green-100 p-3 rounded-full"><i class="fas fa-map-marker-alt text-[var(--agri-green)]"></i></div>
-              <div>
-                <div class="font-medium">Our Office</div>
-                <div class="text-gray-600">Bengaluru, Karnataka, India</div>
-              </div>
-            </div>
-
-            <div class="flex items-start gap-4">
-              <div class="bg-green-100 p-3 rounded-full"><i class="fas fa-share-alt text-[var(--agri-green)]"></i></div>
-              <div>
-                <div class="font-medium">Follow Us</div>
-                <div class="flex gap-4 mt-2">
-                  <a href="https://www.linkedin.com/in/prajwalworld/" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-[var(--agri-green)]"><i class="fab fa-linkedin"></i></a>
-                  <a href="https://x.com/agriventures_In" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-[var(--agri-green)]"><i class="fab fa-twitter"></i></a>
-                  <a href="https://www.instagram.com/agriventures.in/" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-[var(--agri-green)]"><i class="fab fa-instagram"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- contact form -->
-        <div class="lg:w-1/2">
-          <form id="contact-form" class="bg-gray-50 p-6 rounded-lg" aria-label="Contact form" novalidate>
-            <input type="text" name="_gotcha" id="_gotcha_contact" style="display:none" autocomplete="off" aria-hidden="true" tabindex="-1">
-
-            <div class="mb-4">
-              <label for="contact-name" class="block mb-1 text-gray-700">Name</label>
-              <input id="contact-name" name="name" required class="w-full px-4 py-2 rounded-md border border-gray-300" placeholder="Your name" />
-            </div>
-
-            <div class="mb-4">
-              <label for="contact-email" class="block mb-1 text-gray-700">Email</label>
-              <input id="contact-email" name="email" type="email" required class="w-full px-4 py-2 rounded-md border border-gray-300" placeholder="Your email address" />
-            </div>
-
-            <div class="mb-4">
-              <label for="contact-subject" class="block mb-1 text-gray-700">Subject</label>
-              <input id="contact-subject" name="subject" class="w-full px-4 py-2 rounded-md border border-gray-300" placeholder="Subject" />
-            </div>
-
-            <div class="mb-4">
-              <label for="contact-message" class="block mb-1 text-gray-700">Message</label>
-              <textarea id="contact-message" name="message" rows="5" required class="w-full px-4 py-2 rounded-md border border-gray-300" placeholder="Your message"></textarea>
-            </div>
-
-            <button type="submit" class="w-full bg-[var(--agri-green)] text-white px-6 py-3 rounded-md">Send Message</button>
-            <div class="contact-status text-sm mt-3" role="status" aria-live="polite"></div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="bg-gray-900 text-white py-12">
-    <div class="container mx-auto px-4">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-        <div class="md:col-span-2">
-          <div class="flex items-center gap-3 mb-4">
-            <img src="logo.png" alt="AgriVentures logo" class="w-8 h-8" />
-            <span class="text-[var(--agri-green)] font-bold text-lg">AgriVentures</span>
-          </div>
-          <p class="text-gray-400 mb-4">Connecting India's agritech ecosystem to drive innovation and growth in agriculture.</p>
-          <div class="flex gap-4">
-            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin"></i></a>
-            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
-          </div>
-        </div>
-
-        <div>
-          <h4 class="font-semibold mb-3">Quick Links</h4>
-          <ul class="space-y-2 text-gray-400">
-            <li><a href="#about" class="hover:text-white">About</a></li>
-            <li><a href="#benefits" class="hover:text-white">Benefits</a></li>
-            <li><a href="#team" class="hover:text-white">Team</a></li>
-            <li><a href="#community" class="hover:text-white">Community</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="font-semibold mb-3">Newsletter</h4>
-          <form id="newsletter-form" class="flex gap-0" aria-label="Newsletter subscribe" novalidate>
-            <input type="text" name="_gotcha" id="_gotcha_newsletter" style="display:none" autocomplete="off" aria-hidden="true" tabindex="-1">
-            <input type="email" name="email" required class="px-4 py-2 rounded-l-md w-full text-gray-800" placeholder="Your email" />
-            <button type="submit" class="bg-[var(--agri-green)] px-4 py-2 rounded-r-md text-white"><i class="fas fa-paper-plane"></i></button>
-          </form>
-          <div class="newsletter-status text-sm mt-2" role="status" aria-live="polite"></div>
-        </div>
-      </div>
-
-      <div class="border-t border-gray-800 mt-8 pt-6 text-center">
-        <p class="text-gray-400 text-sm">&copy; 2024 AgriVentures India. All rights reserved.</p>
-      </div>
-    </div>
+    <div style="text-align:center;margin-top:14px;color:rgba(255,255,255,0.2)">© 2024 AgriVentures India. All rights reserved.</div>
   </footer>
 
-  <!-- External scripts (deferred where possible) -->
-  <script src="https://unpkg.com/aos@next/dist/aos.js" defer></script>
+  <!-- SUCCESS OVERLAY -->
+  <div id="successOverlay" class="overlay" role="alertdialog" aria-modal="true" aria-hidden="true" aria-labelledby="successTitle" aria-describedby="successMessage">
+    <div class="overlay-card">
+      <svg class="checkmark" viewBox="0 0 52 52" aria-hidden="true">
+        <path d="M14 27 l8 8 16-20"></path>
+      </svg>
+      <h3 id="successTitle" style="margin:10px 0 4px">Thanks — we received your submission</h3>
+      <p id="successMessage" style="margin:0;color:var(--muted-light)">We'll get back to you soon.</p>
 
+      <div class="confetti" aria-hidden="true">
+        <div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div><div class="c"></div>
+      </div>
+
+      <div style="margin-top:14px">
+        <button id="overlayClose" class="btn btn-ghost">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS (progressive enhancement) -->
   <script>
-  /* ---------- Globals & Helpers ---------- */
-
-  // YOUR Apps Script endpoint (the one you gave me)
+  /**********************************************************************
+   * Configuration
+   * - APPS_SCRIPT_ENDPOINT: set to your Apps Script web app URL (kept unchanged)
+   * - REDIRECT_AFTER_SUCCESS: set to true to redirect instead of showing overlay
+   * - REDIRECT_URL: set to your thank-you page URL
+   **********************************************************************/
   const APPS_SCRIPT_ENDPOINT = "https://script.google.com/macros/s/AKfycbyMKeyO-cKOmjud2kwobtIyIOCU3IN0-EUXlAL2QNewrOWi8Wp-nqjTlBYZzTGpKW5J/exec";
+  const REDIRECT_AFTER_SUCCESS = false; // set to true if you want to redirect
+  const REDIRECT_URL = "/thank-you.html"; // destination if redirect enabled
 
-  // safe loader for external scripts
-  function loadScriptOnce(src, opts = {}) {
-    if (document.querySelector('script[data-src="'+src+'"]')) return Promise.resolve();
-    return new Promise((resolve, reject) => {
-      const s = document.createElement('script');
-      s.src = src;
-      s.defer = !!opts.defer;
-      s.async = !!opts.async;
-      s.setAttribute('data-src', src);
-      s.onload = () => resolve();
-      s.onerror = (e) => reject(e);
-      document.head.appendChild(s);
-    });
-  }
+  // Helper: DOM ready
+  function ready(fn){ if(document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
 
-  // small DOM-ready helper
-  function ready(fn) {
-    if (document.readyState !== 'loading') fn();
-    else document.addEventListener('DOMContentLoaded', fn);
-  }
+  // Helper: show overlay
+  function showSuccessOverlay(message, title) {
+    const overlay = document.getElementById('successOverlay');
+    if (!overlay) return;
+    if (title) document.getElementById('successTitle').textContent = title;
+    if (message) document.getElementById('successMessage').textContent = message;
+    overlay.classList.add('show');
+    overlay.setAttribute('aria-hidden','false');
 
-  /* ---------- AOS init ---------- */
-  ready(() => {
-    if (window.AOS) AOS.init({ duration: 700, easing: 'ease-in-out', once: true });
-  });
+    // auto-close after 3.2s unless redirecting
+    setTimeout(()=> {
+      if (!REDIRECT_AFTER_SUCCESS) closeOverlay();
+    }, 3200);
 
-  /* ---------- Vanta & Particles (conditional) ---------- */
-  ready(() => {
-    const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent) || window.innerWidth < 768;
-    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (!isMobile && !prefersReduced) {
-      loadScriptOnce('https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js')
-        .then(()=> loadScriptOnce('https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js'))
-        .then(()=> {
-          try {
-            if (typeof VANTA !== 'undefined' && document.getElementById('vanta-canvas')) {
-              VANTA.NET({ el: "#vanta-canvas", color: 0x2f9e44, backgroundColor: 0x061124, points: 14, maxDistance: 22, spacing: 16, showDots: false, mouseControls:true, touchControls:false });
-            }
-          } catch(e) { console.warn('Vanta failed', e); }
-        }).catch(()=>{ /* fail silently */ });
-
-      // particles overlay (light)
-      loadScriptOnce('https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js')
-        .then(()=> {
-          if (window.particlesJS && document.getElementById('particles-js')) {
-            particlesJS('particles-js', {
-              particles: { number: { value: 35 }, color: { value: "#ffffff" }, shape: { type: "circle" }, opacity: { value: .24, random:true }, size: { value: 2.1, random:true }, line_linked: { enable:true, distance:110, color:"#ffffff", opacity:0.08, width:0.9 }, move: { enable:true, speed:0.8, random:true, out_mode:"out" } },
-              interactivity: { detect_on:"canvas", events:{ onhover:{ enable:true, mode:"repulse" }, onclick:{ enable:true, mode:"push" }, resize:true } }
-            });
-          }
-        }).catch(()=>{});
-    } else {
-      // hide heavy visuals on mobile / reduced motion
-      const p = document.getElementById('particles-js'); if (p) p.style.display = 'none';
-      const v = document.getElementById('vanta-canvas'); if (v) v.style.display = 'none';
+    if (REDIRECT_AFTER_SUCCESS && REDIRECT_URL) {
+      setTimeout(()=> { window.location.href = REDIRECT_URL; }, 1400);
     }
-  });
+  }
+  function closeOverlay() {
+    const overlay = document.getElementById('successOverlay');
+    if (!overlay) return;
+    overlay.classList.remove('show');
+    overlay.setAttribute('aria-hidden','true');
+  }
+  document.getElementById('overlayClose')?.addEventListener('click', closeOverlay);
+  document.addEventListener('keydown', (e)=> { if (e.key === 'Escape') closeOverlay(); });
 
-  /* ---------- Custom cursor ---------- */
-  (function(){
-    const cursor = document.querySelector('.cursor');
-    const follower = document.querySelector('.cursor-follower');
-    if (!cursor || !follower) return;
-    let mouseX=0, mouseY=0, posX=0, posY=0;
-    function loop(){ posX += (mouseX - posX) * .18; posY += (mouseY - posY) * .18; follower.style.transform = `translate(${posX}px, ${posY}px)`; cursor.style.transform = `translate(${mouseX}px, ${mouseY}px)`; requestAnimationFrame(loop); }
-    loop();
-    document.addEventListener('mousemove', e=>{ mouseX = e.clientX; mouseY = e.clientY; });
-    document.addEventListener('mouseover', e => { const t = e.target.closest('a,button,.bento-item,.icon-3d'); if (t) { cursor.classList.add('active'); follower.classList.add('active'); } });
-    document.addEventListener('mouseout', e => { const t = e.target.closest('a,button,.bento-item,.icon-3d'); if (!t) { cursor.classList.remove('active'); follower.classList.remove('active'); } });
-  })();
-
-  /* ---------- Mobile menu ---------- */
+  // Mobile menu toggle
   ready(()=> {
-    const btn = document.getElementById('mobile-menu-button');
-    const menu = document.getElementById('mobile-menu');
-    if (!btn || !menu) return;
-    btn.addEventListener('click', ()=> {
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!expanded));
-      menu.classList.toggle('hidden');
-      menu.setAttribute('aria-hidden', String(menu.classList.contains('hidden')));
-      const i = btn.querySelector('i'); if (i) i.classList.toggle('fa-times');
+    const toggle = document.getElementById('mobileToggle');
+    const menu = document.getElementById('mobileMenu');
+    if (!toggle || !menu) return;
+    toggle.addEventListener('click', ()=> {
+      const open = menu.classList.toggle('hidden') ? false : true;
+      toggle.setAttribute('aria-expanded', String(open));
+      menu.setAttribute('aria-hidden', String(!open));
+      // rotate small icon for feedback
+      const svg = toggle.querySelector('svg');
+      if (svg) svg.style.transform = open ? 'rotate(90deg)' : 'none';
     });
-    // close on anchor click
-    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', ()=> { menu.classList.add('hidden'); btn.setAttribute('aria-expanded','false'); }) );
   });
 
-  /* ---------- Forms: Apps Script integration ---------- */
-  // helper to POST form data to Apps Script endpoint
-  async function postFormToAppsScript(formEl, formType) {
+  // Small helper: POST form to Apps Script with fallback handling
+  async function postForm(formEl, formType) {
     const fd = new FormData(formEl);
-    // include honeypot and formType
+    // ensure honeypot exists
     if (!fd.has('_gotcha')) fd.append('_gotcha','');
     fd.set('formType', formType);
 
-    // basic validation
-    const data = Object.fromEntries(fd.entries());
-    if (formType === 'community' && (!data.name || !data.email)) return {ok:false, message:'Name and email required.'};
-    if (formType === 'contact' && (!data.name || !data.email || !data.message)) return {ok:false, message:'Name, email and message required.'};
-    if (formType === 'newsletter' && (!data.email)) return {ok:false, message:'Email required.'};
+    // prepare payload - Apps Script expects URLSearchParams
+    const payload = new URLSearchParams();
+    for (const pair of fd.entries()) { payload.append(pair[0], pair[1]); }
 
     try {
-      const res = await fetch(APPS_SCRIPT_ENDPOINT, { method:'POST', headers:{ 'Accept':'application/json' }, body: new URLSearchParams(data) });
-      const json = await res.json();
-      return { ok: json.status === 'success', json };
+      const resp = await fetch(APPS_SCRIPT_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: payload
+      });
+      // If Apps Script returns text, still try to parse safely
+      const ct = resp.headers.get('content-type') || '';
+      if (ct.includes('application/json')) {
+        const json = await resp.json();
+        return { ok: json.status === 'success', json };
+      } else {
+        const text = await resp.text();
+        // attempt to detect a success word (some Apps Script deployments return plain 'OK')
+        const ok = resp.ok && (text.toLowerCase().includes('success') || text.toLowerCase().includes('ok'));
+        return { ok, text };
+      }
     } catch (err) {
       return { ok:false, message: err.message || 'Network error' };
     }
   }
 
-  // wire community form
+  // Attach forms with validation & UX
   ready(()=> {
-    const communityForm = document.getElementById('community-form');
-    if (!communityForm) return;
-    communityForm.addEventListener('submit', async (e)=>{
-      e.preventDefault();
-      const btn = communityForm.querySelector('button[type="submit"]');
-      const statusEl = document.getElementById('community-feedback');
-      if (statusEl) statusEl.textContent = 'Sending...';
-      if (btn) { btn.disabled = true; btn.setAttribute('aria-busy','true'); }
-      const resp = await postFormToAppsScript(communityForm, 'community');
-      if (resp.ok) { if (statusEl) statusEl.textContent = 'Thanks — we will be in touch!'; communityForm.reset(); }
-      else { if (statusEl) statusEl.textContent = resp.message || 'Submission failed. Try later.'; console.error('Community form error', resp); }
-      if (btn) { btn.disabled = false; btn.removeAttribute('aria-busy'); }
-    });
-  });
-
-  // wire contact form
-  ready(()=> {
-    const contactForm = document.getElementById('contact-form');
-    if (!contactForm) return;
-    contactForm.addEventListener('submit', async (e)=>{
-      e.preventDefault();
-      const btn = contactForm.querySelector('button[type="submit"]');
-      let statusEl = contactForm.querySelector('.contact-status');
-      if (!statusEl) { statusEl = document.createElement('div'); statusEl.className='contact-status text-sm mt-3'; statusEl.setAttribute('role','status'); contactForm.appendChild(statusEl); }
-      statusEl.textContent = 'Sending...';
-      if (btn) { btn.disabled = true; btn.setAttribute('aria-busy','true'); }
-      const resp = await postFormToAppsScript(contactForm, 'contact');
-      if (resp.ok) { statusEl.textContent = 'Message sent — thank you!'; contactForm.reset(); }
-      else { statusEl.textContent = resp.message || 'Failed to send. Try later.'; console.error('Contact form error', resp); }
-      if (btn) { btn.disabled = false; btn.removeAttribute('aria-busy'); }
-    });
-  });
-
-  // wire newsletter form
-  ready(()=> {
-    const newsletterForm = document.getElementById('newsletter-form');
-    if (!newsletterForm) return;
-    newsletterForm.addEventListener('submit', async (e)=>{
-      e.preventDefault();
-      const btn = newsletterForm.querySelector('button[type="submit"]');
-      let statusEl = document.querySelector('.newsletter-status');
-      if (!statusEl) { statusEl = document.createElement('div'); statusEl.className='newsletter-status text-sm mt-2'; statusEl.setAttribute('role','status'); newsletterForm.appendChild(statusEl); }
-      statusEl.textContent = 'Sending...';
-      if (btn) { btn.disabled = true; btn.setAttribute('aria-busy','true'); }
-      const resp = await postFormToAppsScript(newsletterForm, 'newsletter');
-      if (resp.ok) { statusEl.textContent = 'Subscribed — thank you!'; newsletterForm.reset(); }
-      else { statusEl.textContent = resp.message || 'Subscription failed.'; console.error('Newsletter error', resp); }
-      if (btn) { btn.disabled = false; btn.removeAttribute('aria-busy'); }
-    });
-  });
-
-  /* ---------- Smooth scroll for anchor links with sticky offset handled by CSS scroll-margin-top ---------- */
-  ready(()=> {
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        if (!href || href === '#') return;
-        // allow normal behavior for mobile menu links then scroll
+    // community form
+    const community = document.getElementById('form-community');
+    if (community) {
+      community.addEventListener('submit', async (e)=> {
         e.preventDefault();
-        const el = document.querySelector(href);
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        // close mobile menu if open
-        const mobileMenu = document.getElementById('mobile-menu');
-        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-          mobileMenu.classList.add('hidden');
+        const submitBtn = community.querySelector('button[type="submit"]');
+        const feedback = document.getElementById('community-feedback');
+        if (feedback) feedback.textContent = 'Sending…';
+        if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending…'; }
+
+        const res = await postForm(community, 'community');
+        if (res.ok) {
+          showSuccessOverlay('Thanks! Your community request has been received.', 'Thanks — submission received!');
+          community.reset();
+          if (feedback) feedback.textContent = '';
+        } else {
+          const message = res.message || (res.json && res.json.message) || 'Submission failed. Please try again.';
+          if (feedback) feedback.textContent = message;
+          console.error('Community submit error', res);
+        }
+
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Join Now'; }
+      });
+    }
+
+    // contact form
+    const contact = document.getElementById('form-contact');
+    if (contact) {
+      contact.addEventListener('submit', async (e)=> {
+        e.preventDefault();
+        const submitBtn = contact.querySelector('button[type="submit"]');
+        const feedback = contact.querySelector('.contact-feedback');
+        if (feedback) feedback.textContent = 'Sending…';
+        if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending…'; }
+
+        const res = await postForm(contact, 'contact');
+        if (res.ok) {
+          showSuccessOverlay('Thanks! Your message was sent — we will get back soon.', 'Message Sent!');
+          contact.reset();
+          if (feedback) feedback.textContent = '';
+        } else {
+          const message = res.message || (res.json && res.json.message) || 'Failed to send. Please try again.';
+          if (feedback) feedback.textContent = message;
+          console.error('Contact submit error', res);
+        }
+
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Send Message'; }
+      });
+    }
+
+    // newsletter
+    const newsletter = document.getElementById('form-newsletter');
+    if (newsletter) {
+      newsletter.addEventListener('submit', async (e)=> {
+        e.preventDefault();
+        const statusEl = document.querySelector('.newsletter-feedback');
+        if (statusEl) statusEl.textContent = 'Subscribing…';
+
+        const res = await postForm(newsletter, 'newsletter');
+        if (res.ok) {
+          showSuccessOverlay('Subscribed — thanks for joining our newsletter!', 'Subscribed!');
+          newsletter.reset();
+          if (statusEl) statusEl.textContent = '';
+        } else {
+          const message = res.message || (res.json && res.json.message) || 'Subscription failed.';
+          if (statusEl) statusEl.textContent = message;
+          console.error('Newsletter submit error', res);
         }
       });
-    });
+    }
   });
 
+  // Load heavy visual libs only for capable desktop browsers (non-blocking)
+  (function(){
+    const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent) || window.innerWidth < 760;
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!isMobile && !prefersReduced) {
+      const three = document.createElement('script');
+      three.src = 'https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js';
+      three.async = true;
+      three.onload = () => {
+        const vanta = document.createElement('script');
+        vanta.src = 'https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js';
+        vanta.async = true;
+        vanta.onload = () => {
+          try {
+            if (typeof VANTA !== 'undefined' && document.getElementById('vantaContainer')) {
+              VANTA.NET({
+                el: "#vantaContainer",
+                color: 0x2f9e44,
+                backgroundColor: 0x061124,
+                points: 14,
+                maxDistance: 22,
+                spacing: 16,
+                showDots: false,
+                mouseControls: true,
+                touchControls: false,
+                gyroControls: false
+              });
+            }
+          } catch (err) { console.warn('Vanta init failed', err); }
+        };
+        document.head.appendChild(vanta);
+      };
+      document.head.appendChild(three);
+    } else {
+      // do nothing (conserve resources on mobile / reduced-motion)
+    }
+  })();
   </script>
 </body>
 </html>
